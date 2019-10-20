@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "56820426350",
+    "firebase_url": "https://kursusnya.firebaseio.com",
+    "project_id": "kursusnya",
+    "storage_bucket": "kursusnya.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56820426350:android:0a3039005119106b8b687f",
+        "android_client_info": {
+          "package_name": "byneet.com.adminkursus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56820426350-mr494bfsbefa20c8mh769q4sfq65e1ga.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "byneet.com.adminkursus",
+            "certificate_hash": "bc30b6fc7cdbdfcf0ad7be1377134930cc50e39e"
+          }
+        },
+        {
+          "client_id": "56820426350-l4khsi9kc554hfbojsfdr0p1aobf6gl9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "byneet.com.adminkursus",
+            "certificate_hash": "7d7e39326039c332c0ce7b465891dc762ed12676"
+          }
+        },
+        {
+          "client_id": "56820426350-9e9j3dohnvrgoe1s8qv2c27kj9nk0q07.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEh_L_8PzejrpAd6RbnwVfOTKpm5n3bXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56820426350-9e9j3dohnvrgoe1s8qv2c27kj9nk0q07.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56820426350:android:8bb420d01b4ab04d8b687f",
+        "android_client_info": {
+          "package_name": "com.byneet.adminkursus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56820426350-qc54p2ccelakmh3uq18sv46a7re7j7si.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.byneet.adminkursus",
+            "certificate_hash": "bc30b6fc7cdbdfcf0ad7be1377134930cc50e39e"
+          }
+        },
+        {
+          "client_id": "56820426350-9e9j3dohnvrgoe1s8qv2c27kj9nk0q07.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEh_L_8PzejrpAd6RbnwVfOTKpm5n3bXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56820426350-9e9j3dohnvrgoe1s8qv2c27kj9nk0q07.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
