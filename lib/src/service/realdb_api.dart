@@ -65,6 +65,16 @@ class RealdbApi{
     
   }
 
+  Future<void> simpanJawaban(Map<String,dynamic> n,String uid,int nilai)async{
+   return db.reference().child('banksoal/idsoal/selesai/$uid').set({
+      "uid":uid,
+      "nilai":nilai,
+      "tglselesai":DateTime.now().toIso8601String(),
+      "jawabannye":n
+    });
+    
+  }
+
   // Future<List<BankSoalModel>> getListSoal(){
   //   return ref.child('banksoal').once().then((data){
   //     print('get list soal:'+ data.value);

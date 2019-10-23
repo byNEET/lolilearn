@@ -16,7 +16,7 @@ class StaticData{
     "Matematika",
     "Fisika",
     "Kimia",
-    "IPA"
+    "IPA",
     "Bahasa Ingris"
   ];
 }

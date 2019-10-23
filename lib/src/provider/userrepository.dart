@@ -84,18 +84,21 @@ class UserRepository with ChangeNotifier {
       _user = firebaseUser;
       _status = Status.Authenticated;
 
-      api.cekUser(firebaseUser)
-      .then((value){
-        print(value.toMap());
-      _profil = value;
-      if (value.kelas==null || value == null){
-        _dataProfil = DataProfil.BelumLengkap;
-        notifyListeners();
-      } else{
-        _dataProfil = DataProfil.Lengkap;
-        notifyListeners();
-      }
-      });
+      // api.cekUser(firebaseUser)
+      // .then((value){
+      //   print(value.toMap());
+      // _profil = value;
+      // if (value.kelas==null || value == null){
+      //   _dataProfil = DataProfil.BelumLengkap;
+       
+      // } else{
+      //   _dataProfil = DataProfil.Lengkap;
+       
+      // }
+      // });
+
+      var cekuser = await api.cekUser(firebaseUser);
+      _profil=cekuser;
       
     }
     notifyListeners();
