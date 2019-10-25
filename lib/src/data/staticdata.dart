@@ -19,4 +19,12 @@ class StaticData{
     "IPA",
     "Bahasa Ingris"
   ];
+
+  final List<String> jenis=[
+    "UAS",
+    "UTS",
+    "Tugas",
+    "UN",
+    "latihan"
+  ];
 }

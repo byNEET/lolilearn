@@ -1,6 +1,5 @@
-import 'package:adminkursus/src/model/banksoal_model.dart';
+import 'package:adminkursus/src/model/banksoall_quicktype.dart';
 import 'package:adminkursus/src/model/carisoal_model.dart';
-import 'package:adminkursus/src/model/soalnya_model.dart';
 import 'package:adminkursus/src/model/userprofil_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -57,30 +56,45 @@ class RealdbApi{
     }
   }
 
-  Future<SoalnyaModel> getSoalnya(String idsoal) async{
+  Future<BanksoalModel> getSoalnya(String idsoal) async{
     print('getsoal func');
-    DataSnapshot data =  await db.reference().child('/banksoal/idsoal').once();
+    DataSnapshot data =  await db.reference().child('/banksoal/$idsoal').once();
       print('getSoalnya:'+data.value.toString());
-      return SoalnyaModel.fromRealDb(data);
+      return BanksoalModel.fromJson(data.key, data.value);
     
   }
 
-  Future<void> simpanJawaban(Map<String,dynamic> n,String uid,int nilai)async{
-   return db.reference().child('banksoal/idsoal/selesai/$uid').set({
+  Future<void> simpanJawaban(String idsoal,Map<String,dynamic> n,String uid,int nilai)async{
+   return db.reference().child('banksoal/$idsoal/selesai/$uid').set({
       "uid":uid,
       "nilai":nilai,
       "tglselesai":DateTime.now().toIso8601String(),
       "jawabannye":n
-    });
-    
+    });    
   }
 
-  // Future<List<BankSoalModel>> getListSoal(){
-  //   return ref.child('banksoal').once().then((data){
-  //     print('get list soal:'+ data.value);
-  //     Map oke =data.value;
-  //     List<BankSoalModel> coeg=[];
-  //     oke.forEach((k,v)=>coeg.add(BankSoalModel(id: k,soalnye: )));
-  //   });
-  // }
-} 
+//------------------------------------------------------------admin----------------------------------
+
+  Future<List<BanksoalModel>> getListSoal()async{
+    var data = await ref.child('banksoal').once();
+      print('get list soal:'+ data.value.toString());
+      Map oke =data.value;
+      List<BanksoalModel> coeg=[];
+      oke.forEach((k,v)=>coeg.add(BanksoalModel.fromJson(k,v)));
+      return coeg;
+  }
+
+  Future<void> setSoal(String idsoal,String no,Soalnye oke)async{
+    return ref.child('banksoal/$idsoal/soalnye/$no').set(oke.toJson());
+  }
+
+  Future<void> buatPaketSoal(Map<String,dynamic> data)async{
+    return ref.child('banksoal').push().set(data).then((_)=>print("buat paket soal sukses, cus input"));
+  }
+
+  Future<void> pushPaketSoal(String kelas,String mapel, CariSoalModel sual)async{
+    return ref.child('carisoal/$kelas/$mapel').push().set(sual.toMap()).then((_)=>print("push soal sukses")).then((_){
+      return ref.child('banksoal/${sual.idsoalnya}/published').set(true).then((_)=>print('change published to true'));
+    });
+  }
+}  

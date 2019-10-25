@@ -1,3 +1,4 @@
+import 'package:adminkursus/src/provider/buatPaketSoalProv.dart';
 import 'package:adminkursus/src/provider/buatsoalprov.dart';
 import 'package:adminkursus/src/provider/jawabanprov.dart';
 import 'package:adminkursus/src/provider/searchprov.dart';
@@ -24,6 +25,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
          builder: (_) => SearchProv()),
          ChangeNotifierProvider(
+         builder: (_) => BuatPaketSoalProv()),
+          ChangeNotifierProvider(
          builder: (_) => BuatSoalProv()),
       ],
           child: MaterialApp(

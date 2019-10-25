@@ -3,6 +3,7 @@ import 'package:adminkursus/src/model/carisoal_model.dart';
 import 'package:adminkursus/src/provider/searchprov.dart';
 import 'package:adminkursus/src/provider/userrepository.dart';
 import 'package:adminkursus/src/service/realdb_api.dart';
+import 'package:adminkursus/src/ui/admin/daftarsoal.dart';
 import 'package:adminkursus/src/ui/edituser.dart';
 import 'package:adminkursus/src/ui/soalnya_page.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,9 @@ class HomSekrin extends StatelessWidget {
   Widget build(BuildContext context) {
     final userProv = Provider.of<UserRepository>(context);
     return Scaffold(
+      appBar: AppBar(backgroundColor:Colors.transparent,elevation: 0,actions: <Widget>[
+        FlatButton(child: Text('admin'),onPressed: ()=>Navigator.push(context,MaterialPageRoute(builder: (_)=>DaftarSoalAdminPage())),)
+      ],),
       body: Container(
         height: double.infinity,
         width: double.infinity,
@@ -53,7 +57,7 @@ class HomSekrin extends StatelessWidget {
               RaisedButton(
                 child: Text('cari Soal'),
                 onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>CariSoalPiew())),
-              )
+              ),
             ],
           ),
         ),

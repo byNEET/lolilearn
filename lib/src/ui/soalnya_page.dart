@@ -1,4 +1,5 @@
-import 'package:adminkursus/src/model/soalnya_model.dart';
+import 'package:adminkursus/src/model/banksoall_quicktype.dart';
+// import 'package:adminkursus/src/model/soalnya_model.dart';
 import 'package:adminkursus/src/provider/jawabanprov.dart';
 import 'package:adminkursus/src/provider/userrepository.dart';
 import 'package:adminkursus/src/service/realdb_api.dart';
@@ -14,8 +15,8 @@ class SoalnyaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<SoalnyaModel>(
-          future: db.getSoalnya('idsoal'),
+    return FutureBuilder<BanksoalModel>(
+          future: db.getSoalnya(idSoalnya),
           builder: (context,snapsut){
             print(snapsut.data);
             if ((snapsut.connectionState == ConnectionState.done)) {
@@ -29,7 +30,7 @@ class SoalnyaPage extends StatelessWidget {
                       child: Scaffold(
                        key: UniqueKey(),
         appBar: AppBar(title: Text(snapsut.data.mapel+snapsut.data.kelas),actions: <Widget>[
-          TombolSudahdiUjungKananAppbar(jumlahsoal: snapsut.data.soalnye.length-1,)
+          TombolSudahdiUjungKananAppbar(idsoal: snapsut.data.id,jumlahsoal: snapsut.data.soalnye.length-1,)
         ],
         bottom: TabBar(
           isScrollable: true,
@@ -71,14 +72,16 @@ class SoalnyaPage extends StatelessWidget {
 
 class TombolSudahdiUjungKananAppbar extends StatelessWidget {
   final int jumlahsoal;
-  TombolSudahdiUjungKananAppbar({this.jumlahsoal});
+  final String idsoal;
+  TombolSudahdiUjungKananAppbar({this.jumlahsoal,this.idsoal});
   final RealdbApi api = RealdbApi();
 
-  void _submitJawaban(n,uid,nilai,context)async{
-    api.simpanJawaban(n, uid, nilai).then((_){
-      Navigator.push(context, MaterialPageRoute(builder: (__)=>ResultNilaiPage()));
-    });
-  }
+  // void _submitJawaban(idsoal,n,uid,nilai,context)async{
+  //   api.simpanJawaban(idsoal,n, uid, nilai).then((_){
+  //     Provider.of<JawabanProv>(context).clear();
+  //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (__)=>ResultNilaiPage(nilai:nilai)));
+  //   });
+  // }
   @override
   Widget build(BuildContext context) {
     final jawabanProv = Provider.of<JawabanProv>(context);
@@ -88,7 +91,12 @@ class TombolSudahdiUjungKananAppbar extends StatelessWidget {
     return Container(
       child: RaisedButton(
         child: Text('Selesai'),
-        onPressed: (data.length == jumlahsoal)  ? ()async=>_submitJawaban(data,user.user.uid,nilai,context):null,
+        onPressed: (data.length == jumlahsoal)  ? ()async{
+        api.simpanJawaban(idsoal,data, user.user.uid, nilai).then((_){
+      jawabanProv.clear();
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (__)=>ResultNilaiPage(nilai:nilai)));
+    });   
+        }:null,
       ),
     );
   }
