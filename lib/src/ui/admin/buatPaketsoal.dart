@@ -10,7 +10,7 @@ class BuatPaketSoalPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //final search = Provider.of<SearchProv>(context);
-    final bsoal = Provider.of<BuatPaketSoalProv>(context);
+    final bsoal = Provider.of<BuatPaketSoalProv>(context); 
     return Scaffold(
       appBar: AppBar(
         title: Text('buat Paket soal'),
