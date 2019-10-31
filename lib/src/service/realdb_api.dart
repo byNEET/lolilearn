@@ -1,45 +1,77 @@
 import 'package:adminkursus/src/model/banksoall_quicktype.dart';
 import 'package:adminkursus/src/model/carisoal_model.dart';
-import 'package:adminkursus/src/model/userprofil_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:adminkursus/src/model/usernew_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class RealdbApi{
   static final FirebaseDatabase db = FirebaseDatabase.instance;
   final DatabaseReference ref = db.reference();
 
+//----------------login custom------------------------------------------------
 
-  //--------------------------------user-------------------------------------
-  Future<UserProfil> getUserProfil(String uid) async{
-    return ref.child('user/$uid').once().then((val)=>UserProfil.fromrealdb(val));
-  }
+Future<UserNew> loginatorapi(String id,String pass)async{
+ // var cek = ref.child('user/$pass');
+  var cek2 = await ref.child('user/$id').once();
+  print(cek2.value);
+  if (cek2.value !=null){
+    if (cek2.value["pass"]==pass){
+      return UserNew.fromRealDb(cek2);
+    }else{return null;}   
+  }else{return null;}
+}
 
-  Future<UserProfil> cekUser(FirebaseUser user) async{
-    var snap = await ref.child('user/${user.uid}').once();
-    print(snap.value);
-    if (snap.value != null){
-      print('data user ada');
-      return UserProfil.fromrealdb(snap);
-    }else{
-      print('data user tidak ada');
-       return createUser(user.uid, UserProfil(
-        uid: user.uid,
-        nama: user.displayName,
-        email: user.email,
-        kelas: null,
-        urlimg: user.photoUrl,
-        createat: DateTime.now()
-      )).then((_)=>cekUser(user));
+Future<UserNew> getUserDetil(String id)async{
+  print('get userdetil pre-processing...');
+  return ref.child('user/$id').once().then((onValue)=>UserNew.fromRealDb(onValue));
+}
+
+//-----------------user admin------------------------------------
+Future<List<UserNew>> getListUser()async{
+  return ref.child('user').once().then((onValue){
+    List<UserNew> litUser = List();
+    (onValue.value as Map).forEach((k,v)=>litUser.add(UserNew.fromMap(v)));
+   return litUser;
+  });
+}
+
+Future<void> addUser(UserNew data)async{
+  return ref.child('user/${data.id}').set(data.toMap()).then((_)=>print('add user ${data.id} suksess isi dua'));
+}
+Future<void> deletUser(String id)async{
+  return ref.child('user/$id').remove().then((_)=>print('remove user $id suksess isi dua'));
+}
+
+  //--------------------------------user googlesign-------------------------------------
+  // Future<UserProfil> getUserProfil(String uid) async{
+  //   return ref.child('user/$uid').once().then((val)=>UserProfil.fromrealdb(val));
+  // }
+
+  // Future<UserProfil> cekUser(FirebaseUser user) async{
+  //   var snap = await ref.child('user/${user.uid}').once();
+  //   print(snap.value);
+  //   if (snap.value != null){
+  //     print('data user ada');
+  //     return UserProfil.fromrealdb(snap);
+  //   }else{
+  //     print('data user tidak ada');
+  //      return createUser(user.uid, UserProfil(
+  //       uid: user.uid,
+  //       nama: user.displayName,
+  //       email: user.email,
+  //       kelas: null,
+  //       urlimg: user.photoUrl,
+  //       createat: DateTime.now()
+  //     )).then((_)=>cekUser(user));
       
-    }
-  }
+  //   }
+  // }
 
-  Future<void> createUser(String uid,UserProfil data)async {
-    return ref.child('user/$uid').set(data.toMap()).then((_)=>print('create user successfull'));
-  }
-  Future<void> updateUser(String uid,Map<String,dynamic> data){
-    return ref.child('user/$uid').update(data).then((_)=>print('update user successfull'));
-  }
+  // Future<void> createUser(String uid,UserProfil data)async {
+  //   return ref.child('user/$uid').set(data.toMap()).then((_)=>print('create user successfull'));
+  // }
+  // Future<void> updateUser(String uid,Map<String,dynamic> data){
+  //   return ref.child('user/$uid').update(data).then((_)=>print('update user successfull'));
+  // }
 
   //-------------------------------------soal-------------------------------------------------
   Future<List<CariSoalModel>> cariSoal(String kelas,String mapel) async{
@@ -56,12 +88,22 @@ class RealdbApi{
     }
   }
 
-  Future<BanksoalModel> getSoalnya(String idsoal) async{
+  Future<BanksoalModel> getBankSoalnya(String idsoal) async{
     print('getsoal func');
     DataSnapshot data =  await db.reference().child('/banksoal/$idsoal').once();
       print('getSoalnya:'+data.value.toString());
       return BanksoalModel.fromJson(data.key, data.value);
-    
+  }
+
+  Future<List<Soalnye>> getSoalnye(String idsoal)async{
+    return ref.child('banksoal/$idsoal/soalnye').once().then((onValue){
+      return List<Soalnye>.from(onValue.value.map((x) => x == null ? null : Soalnye.fromJson(x)));
+    });
+  }
+  Future<Selesai> getUserSelesaiDetil(String idsoal,String iduser)async{
+    return ref.child('banksoal/$idsoal/selesai/$iduser').once().then((onValue){
+      return Selesai.fromRealdb(onValue);
+    });
   }
 
   Future<void> simpanJawaban(String idsoal,Map<String,dynamic> n,String uid,int nilai)async{

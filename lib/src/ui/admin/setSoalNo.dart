@@ -43,8 +43,10 @@ class SetSoalNo extends StatelessWidget {
               controller: bsoal.tjawabanD,
               decoration: InputDecoration(labelText: 'Pilihan D:'),
             ),
+            Divider(),
+            Text('jawaban benar:'),
             DropdownButton<String>(
-              hint: Text('Jawaban benar'),
+              hint: Text('pilih Jawaban benar'),
               value: bsoal.jawabanBenar,
               onChanged: (val) {
                 bsoal.jawabanBenar = val;

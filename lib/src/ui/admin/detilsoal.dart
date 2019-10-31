@@ -20,14 +20,14 @@ class _DetilSoalAdminPageState extends State<DetilSoalAdminPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    // TODOs: implement initState
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
      final bsoal = Provider.of<BuatSoalProv>(context);
     return FutureBuilder<BanksoalModel>(
-      future: api.getSoalnya(widget.soalCoeg.id),
+      future: api.getBankSoalnya(widget.soalCoeg.id),
       builder: (context, snapshot) {
         return Scaffold(
           appBar: AppBar(title: Text('detail'),actions: <Widget>[

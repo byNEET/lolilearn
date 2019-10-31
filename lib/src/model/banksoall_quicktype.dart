@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:firebase_database/firebase_database.dart';
+
 //BanksoalModel banksoalModelFromJson(String str) => BanksoalModel.fromJson(json.decode(str));
 
 String banksoalModelToJson(BanksoalModel data) => json.encode(data.toJson());
@@ -74,6 +76,14 @@ class Selesai {
         tglselesai: json["tglselesai"], 
         uid: json["uid"],
         nama: json["nama"]
+    );
+
+    factory Selesai.fromRealdb(DataSnapshot json) => Selesai(
+        jawabannye: List<String>.from(json.value["jawabannye"].map((x) => x == null ? null : x)),
+        nilai: json.value["nilai"],
+        tglselesai: json.value["tglselesai"], 
+        uid: json.value["uid"],
+        nama: json.value["nama"]
     );
 
     Map<String, dynamic> toJson() => {

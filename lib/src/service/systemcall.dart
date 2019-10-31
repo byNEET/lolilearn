@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SystemCall{
 
-  static void generateWillPopElement(BuildContext context){
+  static void generateWillExitAppElement(BuildContext context){
     showDialog(context: context,builder: (_)=>AlertDialog(
       title: Text('Yakin keluar ?'),
       content: Text('jawaban anda tidak akan disimpan'),

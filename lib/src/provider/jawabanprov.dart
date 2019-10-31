@@ -23,6 +23,14 @@ class JawabanProv with ChangeNotifier{
     notifyListeners();
   }
 
+  addListJawabanAndPointselesai(String k,String v,String b){
+    _listJawaban[k]=v;
+
+    _listPoint[k]=(v==b)?1:0;
+    print(listPoint.toString());
+    notifyListeners();
+  }
+
   void clear(){
     _listJawaban={};
     _listPoint={};

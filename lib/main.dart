@@ -1,10 +1,10 @@
 import 'package:adminkursus/src/provider/buatPaketSoalProv.dart';
 import 'package:adminkursus/src/provider/buatsoalprov.dart';
 import 'package:adminkursus/src/provider/jawabanprov.dart';
+import 'package:adminkursus/src/provider/newloginprov.dart';
 import 'package:adminkursus/src/provider/searchprov.dart';
-import 'package:adminkursus/src/provider/userrepository.dart';
-//import 'package:adminkursus/src/ui/homsekrin.dart';
-import 'package:adminkursus/src/ui/login/home.dart';
+import 'package:adminkursus/src/provider/soalRepositoryProv.dart';
+import 'package:adminkursus/src/ui/loginv2/logincasepage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,9 +16,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          builder: (_)=> UserRepository.instance(),
-        ),
+        // ChangeNotifierProvider(
+        //   builder: (_)=> UserRepository.instance(),
+        // ),
         ChangeNotifierProvider(
           builder: (_)=> JawabanProv(),
         ),
@@ -28,6 +28,12 @@ class MyApp extends StatelessWidget {
          builder: (_) => BuatPaketSoalProv()),
           ChangeNotifierProvider(
          builder: (_) => BuatSoalProv()),
+         ChangeNotifierProvider(
+           builder: (_)=>SoalRepositoryProv(),
+         ),
+         ChangeNotifierProvider(
+           builder: (_)=>NewLoginProv(),
+         )
       ],
           child: MaterialApp(
         title: 'Flutter Demo',
@@ -43,7 +49,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: HomePage(),
+        home: LoginCasePage(),
       ),
     );
   }
