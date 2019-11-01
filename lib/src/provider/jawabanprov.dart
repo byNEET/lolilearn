@@ -1,3 +1,4 @@
+import 'package:adminkursus/src/model/banksoall_quicktype.dart';
 import 'package:flutter/widgets.dart';
 
 class JawabanProv with ChangeNotifier{
@@ -23,11 +24,14 @@ class JawabanProv with ChangeNotifier{
     notifyListeners();
   }
 
-  addListJawabanAndPointselesai(String k,String v,String b){
-    _listJawaban[k]=v;
-
-    _listPoint[k]=(v==b)?1:0;
-    print(listPoint.toString());
+  void setAllListJawabanAndPoint(List<String> jawaban,List<Soalnye> benar){
+    _listJawaban.clear();
+    _listPoint.clear();
+    var countkey = List<int>.generate(jawaban.length-1, (i)=>(i+1));
+    for (var v in countkey){
+      _listJawaban[v.toString()]=jawaban[v];
+      _listPoint[v.toString()]=(jawaban[v]==benar[v].jawabanbenar)?1:0;
+    }
     notifyListeners();
   }
 

@@ -26,7 +26,7 @@ class _DaftarSoalAdminPageState extends State<DaftarSoalAdminPage> {
           if (snapshot.connectionState == ConnectionState.done) {
             if (!snapshot.hasData) {
               return Container(
-              color: Colors.pink,
+              color: Colors.white,
               child: Center(
                 child: Text('hasdata == false (something werong)'),
               ),
@@ -55,6 +55,10 @@ class _DaftarSoalAdminPageState extends State<DaftarSoalAdminPage> {
                                         builder: (_) => DetilSoalAdminPage(
                                               soalCoeg: f,
                                             ))).then((onValue)=>setState((){})),
+                                trailing: IconButton(icon: Icon(Icons.delete_forever),onPressed: ()=>showDialog(context: context,builder: (_)=>AlertDialog(title: Text('Hapus paket Soal ?'),actions: <Widget>[
+                                  FlatButton(child: Text('Batal'),onPressed: ()=>Navigator.pop(context),),
+                                  FlatButton(child: Text('Hapus',style: TextStyle(color: Colors.red),),onPressed: ()=>api.hapusPaketSoal(f).then((_)=>Navigator.pop(context)),),
+                                ],)).then((_){setState(() {});}),),
                               ),
                             ))
                         .toList(),
@@ -64,7 +68,7 @@ class _DaftarSoalAdminPageState extends State<DaftarSoalAdminPage> {
             }
           } else {
             return Container(
-              color: Colors.pink,
+              color: Colors.white,
               child: Center(
                 child: CircularProgressIndicator(),
               ),

@@ -1,4 +1,5 @@
 import 'package:adminkursus/src/provider/newloginprov.dart';
+import 'package:adminkursus/src/ui/admin/adminhome.dart';
 import 'package:adminkursus/src/ui/soal/carisoalpage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,7 @@ class _NewHomePageState extends State<NewHomePage> {
     final newuserprov = Provider.of<NewLoginProv>(context);
     return SafeArea(
           child: Scaffold(
+            appBar: AppBar(actions: <Widget>[RaisedButton(child: Text("admen"),onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>AdminHomePage())),)],),
         body: SingleChildScrollView(
           child: Column(children: <Widget>[
             SizedBox(height: 100,),

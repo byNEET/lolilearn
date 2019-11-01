@@ -15,6 +15,8 @@ class BanksoalModel {
     String jenis;
     String kelas;
     String mapel;
+    String tingkat;
+    DateTime createat;
     bool published;
     Map<String,Selesai> selesai;
     List<Soalnye> soalnye;
@@ -29,6 +31,8 @@ class BanksoalModel {
         this.selesai,
         this.soalnye,
         this.titel, 
+        this.tingkat,
+        this.createat
     });
 
     factory BanksoalModel.fromJson(String id,Map<dynamic, dynamic> json) => BanksoalModel(
@@ -40,6 +44,8 @@ class BanksoalModel {
         selesai:json["selesai"]==null?null: Map.from(json["selesai"].map((uid,val)=>MapEntry(uid, Selesai.fromJson(val)))),
         soalnye:json["soalnye"]==null?null: List<Soalnye>.from(json["soalnye"].map((x) => x == null ? null : Soalnye.fromJson(x))),
         titel: json["titel"],
+        tingkat: json["tingkat"]??null,
+        createat: json["createat"]==null?null:DateTime.parse(json["createat"])
     );
 
     Map<String, dynamic> toJson() => {
@@ -50,6 +56,8 @@ class BanksoalModel {
         "selesai": selesai,
         "soalnye": List<dynamic>.from(soalnye.map((x) => x == null ? null : x.toJson())),
         "titel": titel,
+        "createat":DateTime.now().toIso8601String(),
+        "tingkat":tingkat
     };
 }
 

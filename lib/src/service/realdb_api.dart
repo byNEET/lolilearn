@@ -34,8 +34,13 @@ Future<List<UserNew>> getListUser()async{
   });
 }
 
-Future<void> addUser(UserNew data)async{
-  return ref.child('user/${data.id}').set(data.toMap()).then((_)=>print('add user ${data.id} suksess isi dua'));
+Future<void> addUser(String id,String nama)async{
+  return ref.child('user/$id').set(UserNew(
+    id: id,
+    nama: nama,
+    createat: DateTime.now(),
+    pass: id,
+  ).toMap()).then((_)=>print('add user $id suksess isi dua'));
 }
 Future<void> deletUser(String id)async{
   return ref.child('user/$id').remove().then((_)=>print('remove user $id suksess isi dua'));
@@ -134,9 +139,28 @@ Future<void> deletUser(String id)async{
     return ref.child('banksoal').push().set(data).then((_)=>print("buat paket soal sukses, cus input"));
   }
 
+  Future<void> hapusPaketSoal(BanksoalModel data)async{
+    return ref.child('banksoal/${data.id}').remove().then((_)=>print('hapus paket soal sukses')).then((_){
+      return ref.child('carisoal/${data.kelas}/${data.mapel}/${data.id}').remove();
+    });
+  }
+
   Future<void> pushPaketSoal(String kelas,String mapel, CariSoalModel sual)async{
-    return ref.child('carisoal/$kelas/$mapel').push().set(sual.toMap()).then((_)=>print("push soal sukses")).then((_){
+    return ref.child('carisoal/$kelas/$mapel/${sual.idsoalnya}').set(sual.toMap()).then((_)=>print("push soal sukses")).then((_){
       return ref.child('banksoal/${sual.idsoalnya}/published').set(true).then((_)=>print('change published to true'));
+    });
+  }
+
+  Future<void> unPublishSoal(String kelas,String mapel,String idpush,String idsoalnya)async{
+    return ref.child('carisoal/$kelas/$mapel/$idpush').remove().then((_){
+      return ref.child('banksoal/$idsoalnya/published').set(false).then((_)=>print('unpublish sukses'));
+    });
+  }
+
+  Future<void> ngetesBuatSoalLangsungPushtapiFalse()async{
+    var anu = ref.child('banksoal').push().key;
+    return ref.child('banksoal/$anu').set({}).then((_){
+      return ref.child('carisoal/kelas/mapel/$anu').set({"publised":false});
     });
   }
 }  

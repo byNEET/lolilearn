@@ -1,17 +1,27 @@
 import 'package:adminkursus/src/provider/jawabanprov.dart';
 import 'package:adminkursus/src/provider/soalRepositoryProv.dart';
+import 'package:adminkursus/src/service/realdb_api.dart';
+import 'package:adminkursus/src/ui/soal/newsoalnyapage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ResultNilaiPage extends StatelessWidget {
   final int nilai;
   ResultNilaiPage({this.nilai});
+
+  final RealdbApi api = RealdbApi();
+
   @override
   Widget build(BuildContext context) {
     final jawabanProv = Provider.of<JawabanProv>(context);
     final soalProv = Provider.of<SoalRepositoryProv>(context);
     return Scaffold(
-      appBar: AppBar(title: Text('result'),),
+      appBar: AppBar(title: Text('result'),actions: <Widget>[
+        RaisedButton(child: Text('Ulangi'),onPressed: (){
+          jawabanProv.clear();
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>NewSoalnyaPage(idSoalnya: soalProv.banksoal.id,)));
+        },)
+      ],),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

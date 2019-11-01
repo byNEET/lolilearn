@@ -31,7 +31,7 @@ class CariSoalPage extends StatelessWidget {
     return Scaffold(
       key: UniqueKey(),
         appBar: AppBar(
-          title: Text('ini appbar'),
+          title: Text('Pencarian Soal'),
           actions: <Widget>[
            
           ],
@@ -93,25 +93,26 @@ class CariSoalPage extends StatelessWidget {
                     FutureBuilder<Selesai>(
                       future: db.getUserSelesaiDetil(val.idsoalnya, Provider.of<NewLoginProv>(context).userNew.id),
                       builder: (context, snapshot) {
-                        return 
-                         ListTile(title: Text(val.titel),
+                        return ListTile(title: Text(val.titel),
                         subtitle: Text('Jenis ujian: '+val.jenis),
-                        trailing: SizedBox(width: 40,child: snapshot.connectionState==ConnectionState.done?snapshot.hasData?Text(snapshot.data.nilai.toString()):Container():Container(child: CircularProgressIndicator(),)),
+                        trailing: SizedBox(width: 40,child: snapshot.connectionState==ConnectionState.done?snapshot.hasData?Text(snapshot.data.nilai.toString()):Container():Container(child: LinearProgressIndicator(),)),
                         onTap: snapshot.connectionState==ConnectionState.done?snapshot.hasData? 
                         ()async{
-                          db.getSoalnye(val.idsoalnya).then((onValue){
-                            var okes = Provider.of<SoalRepositoryProv>(context).soalnye=onValue;
+                          db.getBankSoalnya(val.idsoalnya).then((onValue){
+                            var okes = onValue;
+                            Provider.of<SoalRepositoryProv>(context).banksoal=onValue;
                             print("okes"+okes.toString());
-                            var z;
-                            List<int>.generate(okes.length-1, (i)=>i+1).map((f){
-                              print(f.toString());
-                              Provider.of<JawabanProv>(context).addListJawabanAndPointselesai(f.toString(), snapshot.data.jawabannye[f], okes[f].jawabanbenar);
-                            });
+                            Provider.of<JawabanProv>(context).setAllListJawabanAndPoint(snapshot.data.jawabannye, okes.soalnye);
+                            // var z;
+                            // List<int>.generate(okes.length-1, (i)=>i+1).map((f){
+                            //   print(f.toString());
+                            //   Provider.of<JawabanProv>(context).addListJawabanAndPointselesai(f.toString(), snapshot.data.jawabannye[f], okes[f].jawabanbenar);
+                            // });
                             
                           }).then((__)=>Navigator.push(context, MaterialPageRoute(builder: (_)=>ResultNilaiPage())));
                         }
                         :(){
-                        Provider.of<JawabanProv>(context).listJawaban.clear();
+                        Provider.of<JawabanProv>(context).clear();
                         Navigator.of(context).push(MaterialPageRoute(builder: (_)=>
                         NewSoalnyaPage(idSoalnya: val.idsoalnya,)));
                         }:null,);
@@ -119,7 +120,7 @@ class CariSoalPage extends StatelessWidget {
                     )).toList(),
                   ):
                   Text('hasdata = false'):
-                  Text('data loading');
+                  Container(child:Column(children: <Widget>[Text('data loading'),LinearProgressIndicator()],) );
                 },
               )
             ],
