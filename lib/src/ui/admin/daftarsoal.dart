@@ -28,7 +28,7 @@ class _DaftarSoalAdminPageState extends State<DaftarSoalAdminPage> {
               return Container(
               color: Colors.white,
               child: Center(
-                child: Text('hasdata == false (something werong)'),
+                child: Text('hasdata == false'),
               ),
             );
             } else {
@@ -75,5 +75,21 @@ class _DaftarSoalAdminPageState extends State<DaftarSoalAdminPage> {
             );
           }
         });
+  }
+}
+
+class BodySeparateByPublished extends StatelessWidget {
+  final List<BanksoalModel> data;
+  final bool publisaed;
+  BodySeparateByPublished({@required this.data,this.publisaed});
+  @override
+  Widget build(BuildContext context) {
+    var okesihp = (publisaed==null)?data:data.where((i)=>i.published==publisaed).toList();
+    
+    return Container(
+      child: SingleChildScrollView(child: Column(children: okesihp.map((f)=>Container()).toList(),),
+
+      ),
+    );
   }
 }
