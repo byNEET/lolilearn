@@ -19,20 +19,7 @@ class _DaftarSoalAdminPageState extends State<DaftarSoalAdminPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<List<BanksoalModel>>(
-        future: api.getListSoal(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (!snapshot.hasData) {
-              return Container(
-              color: Colors.white,
-              child: Center(
-                child: Text('hasdata == false'),
-              ),
-            );
-            } else {
-              var data = snapshot.data;
+  Widget build(BuildContext context) { 
               return Scaffold(
                 appBar: AppBar(
                   title: Text('daftar soal'),
@@ -42,39 +29,40 @@ class _DaftarSoalAdminPageState extends State<DaftarSoalAdminPage> {
                   onPressed: () => Navigator.push(context,
                       MaterialPageRoute(builder: (_) => BuatPaketSoalPage())).then((onValue)=>setState((){})),
                 ),
-                body: SingleChildScrollView(
-                  child: Column(
-                    children: data
-                        .map((f) => Container(
-                              child: ListTile(
-                                title: Text(f.titel),
-                                subtitle: Text(f.kelas +" : " +f.mapel +" : " +f.jenis),
-                                onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => DetilSoalAdminPage(
-                                              soalCoeg: f,
-                                            ))).then((onValue)=>setState((){})),
-                                trailing: IconButton(icon: Icon(Icons.delete_forever),onPressed: ()=>showDialog(context: context,builder: (_)=>AlertDialog(title: Text('Hapus paket Soal ?'),actions: <Widget>[
-                                  FlatButton(child: Text('Batal'),onPressed: ()=>Navigator.pop(context),),
-                                  FlatButton(child: Text('Hapus',style: TextStyle(color: Colors.red),),onPressed: ()=>api.hapusPaketSoal(f).then((_)=>Navigator.pop(context)),),
-                                ],)).then((_){setState(() {});}),),
-                              ),
-                            ))
-                        .toList(),
-                  ),
+                body: FutureBuilder<List<BanksoalModel>>(
+                  future: api.getListSoal(),
+                  builder: (context, snapshot) {
+                    
+                   if (snapshot.connectionState == ConnectionState.done){
+                     if (snapshot.hasData){
+                       var data = snapshot.data;
+                        return SingleChildScrollView(
+                      child: Column(
+                        children: data
+                            .map((f) => Container(
+                                  child: ListTile(
+                                    title: Text(f.titel),
+                                    subtitle: Text(f.kelas +" : " +f.mapel +" : " +f.jenis),
+                                    onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => DetilSoalAdminPage(
+                                                  soalCoeg: f,
+                                                ))).then((onValue)=>setState((){})),
+                                    trailing: IconButton(icon: Icon(Icons.delete_forever),onPressed: ()=>showDialog(context: context,builder: (_)=>AlertDialog(title: Text('Hapus paket Soal ?'),actions: <Widget>[
+                                      FlatButton(child: Text('Batal'),onPressed: ()=>Navigator.pop(context),),
+                                      FlatButton(child: Text('Hapus',style: TextStyle(color: Colors.red),),onPressed: ()=>api.hapusPaketSoal(f).then((_)=>Navigator.pop(context)),),
+                                    ],)).then((_){setState(() {});}),),
+                                  ),
+                                ))
+                            .toList(),
+                      ),
+                    );
+                     }else {return Center(child: Text('hasdata == false'),);}
+                   }else{return Center(child: CircularProgressIndicator(),);}
+                  }
                 ),
               );
-            }
-          } else {
-            return Container(
-              color: Colors.white,
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          }
-        });
   }
 }
 

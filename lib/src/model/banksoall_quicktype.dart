@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:adminkursus/src/service/systemcall.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 //BanksoalModel banksoalModelFromJson(String str) => BanksoalModel.fromJson(json.decode(str));
@@ -116,13 +117,20 @@ class Soalnye {
         this.pertanyaan, 
     });
 
-    factory Soalnye.fromJson(Map<dynamic, dynamic> json) => Soalnye(
+    factory Soalnye.fromJson(Map<dynamic, dynamic> json) {
+      var mapjawaban={};
+      (json["jawaban"] as Map).forEach((k,v)=>mapjawaban[k] = SystemCall.decodeFromBase64(v));
+
+      return Soalnye(
        // jawaban: Jawaban.fromJson(json["jawaban"]),
-        jawaban: json["jawaban"],
+        //jawaban: (json["jawaban"] as Map).map((k,v){}),
+        //jawaban: json["jawaban"],
+        jawaban: mapjawaban,
         jawabanbenar: json["jawabanbenar"],
-        pembahasan: json["pembahasan"],
-        pertanyaan: json["pertanyaan"],
+        pembahasan: SystemCall.decodeFromBase64(json["pembahasan"]),
+        pertanyaan: SystemCall.decodeFromBase64(json["pertanyaan"]),
     );
+    }
 
     Map<String, dynamic> toJson() => {
         "jawaban": jawaban,
@@ -146,10 +154,10 @@ class Jawaban {
     });
 
     factory Jawaban.fromJson(Map<String, dynamic> json) => Jawaban(
-        a: json["A"],
-        b: json["B"],
-        c: json["C"],
-        d: json["D"],
+        a: SystemCall.decodeFromBase64(json["A"]),
+        b: SystemCall.decodeFromBase64(json["B"]),
+        c: SystemCall.decodeFromBase64(json["C"]),
+        d: SystemCall.decodeFromBase64(json["D"]),
     );
 
     Map<String, dynamic> toJson() => {

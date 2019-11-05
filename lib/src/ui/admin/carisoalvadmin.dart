@@ -1,13 +1,7 @@
 import 'package:adminkursus/src/data/staticdata.dart';
-import 'package:adminkursus/src/model/banksoall_quicktype.dart';
 import 'package:adminkursus/src/model/carisoal_model.dart';
-import 'package:adminkursus/src/provider/jawabanprov.dart';
-import 'package:adminkursus/src/provider/newloginprov.dart';
 import 'package:adminkursus/src/provider/searchprov.dart';
-import 'package:adminkursus/src/provider/soalRepositoryProv.dart';
 import 'package:adminkursus/src/service/realdb_api.dart';
-import 'package:adminkursus/src/ui/resultnilai_page.dart';
-import 'package:adminkursus/src/ui/soal/newsoalnyapage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

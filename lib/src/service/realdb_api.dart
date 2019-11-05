@@ -125,10 +125,12 @@ Future<void> deletUser(String id)async{
   Future<List<BanksoalModel>> getListSoal()async{
     var data = await ref.child('banksoal').once();
       print('get list soal:'+ data.value.toString());
+      if (data.value!=null){
       Map oke =data.value;
       List<BanksoalModel> coeg=[];
       oke.forEach((k,v)=>coeg.add(BanksoalModel.fromJson(k,v)));
       return coeg;
+      }else{return null;}
   }
 
   Future<void> setSoal(String idsoal,String no,Soalnye oke)async{

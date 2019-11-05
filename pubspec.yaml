@@ -25,11 +25,11 @@ dependencies:
   cupertino_icons: ^0.1.2
   firebase_database:
   shared_preferences: ^0.5.4+1
-  
+  flutter_tex: ^1.0.9
 
-  firebase_auth: ^0.14.0+5
-  provider: ^3.1.0
-  google_sign_in: ^4.0.7
+  firebase_auth: 
+  provider: 
+  google_sign_in: 
 dev_dependencies:
   flutter_test:
     sdk: flutter

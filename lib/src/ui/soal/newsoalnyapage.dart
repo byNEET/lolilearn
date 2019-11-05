@@ -3,8 +3,10 @@ import 'package:adminkursus/src/provider/jawabanprov.dart';
 import 'package:adminkursus/src/provider/newloginprov.dart';
 import 'package:adminkursus/src/provider/soalRepositoryProv.dart';
 import 'package:adminkursus/src/service/realdb_api.dart';
+import 'package:adminkursus/src/service/systemcall.dart';
 import 'package:adminkursus/src/ui/resultnilai_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tex/flutter_tex.dart';
 import 'package:provider/provider.dart';
 
 class NewSoalnyaPage extends StatelessWidget {
@@ -62,7 +64,7 @@ class NewSoalnyaPage extends StatelessWidget {
             key: UniqueKey(),
             children:List<Widget>.generate(snapsut.data.soalnye.length-1, (int index){
             //  if (snapsut.data.soalnye[index+1]!=null){
-                return TabSoalBody(soalnye: snapsut.data.soalnye,index: index+1,);
+                return TabSoalBody(key: UniqueKey(),soalnye: snapsut.data.soalnye,index: index+1,);
             // }else{
             //    return Container(child: Text('data null: be intro, '),);
             //  }
@@ -142,24 +144,47 @@ class TabItemWiget extends StatelessWidget {
 }
 
 
-class TabSoalBody extends StatelessWidget {
+class TabSoalBody extends StatefulWidget {
   final List<Soalnye> soalnye;
   final int index;
   TabSoalBody({Key key,this.soalnye,this.index}):super(key:key);
+
+  @override
+  _TabSoalBodyState createState() => _TabSoalBodyState();
+}
+
+class _TabSoalBodyState extends State<TabSoalBody>  with AutomaticKeepAliveClientMixin<TabSoalBody>{
+   @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
-     final jawabanProv = Provider.of<JawabanProv>(context);
-    return Container(
-              key: UniqueKey(),
-              child: Column(children: <Widget>[
-              Text("$index. ${soalnye[index].pertanyaan}"),
-              Container(child: Column(children: ["A","B","C","D"].map((f)=>Card(
-                child: ListTile(leading: Container(child: Text('$f.'),color: jawabanProv.listJawaban[(index).toString()]==f?Colors.red:Colors.green,),
-                title: Text(soalnye[index].jawaban[f]),
-                onTap: ()=>jawabanProv.addListJawabanAndPoint((index).toString(), f,soalnye[index].jawabanbenar)),
-              )).toList(),),)
-            ],),);
+    super.build(context);
+     final jawabanProv = Provider.of<JawabanProv>(context,listen: false);
+    return SingleChildScrollView(
+      child: Container(
+                key: widget.key,
+                child: Column(children: <Widget>[
+                //Text("$index. ${soalnye[index].pertanyaan}"),
+                TeXView(teXHTML:widget.soalnye[widget.index].pertanyaan),
+               // PertanyaaRenderSekali(soalnye[index].pertanyaan),
+                Container(child: Column(children: ["A","B","C","D"].map((f)=>Card(
+                  child: ListTile(leading: PilihanJwaban(f,widget.index),
+                                  title: TeXView(teXHTML:widget.soalnye[widget.index].jawaban[f]),
+                                  onTap: ()=>jawabanProv.addListJawabanAndPoint((widget.index).toString(), f,widget.soalnye[widget.index].jawabanbenar)),
+                                  )).toList(),),)
+              ],),),
+    );
   }
 }
 
-
+class PilihanJwaban extends StatelessWidget {
+  final String f;
+  final int index;
+  PilihanJwaban(this.f,this.index);
+  @override
+  Widget build(BuildContext context) {
+    final jawabanProv = Provider.of<JawabanProv>(context);
+    return Container(child: Text('$f.'),color: jawabanProv.listJawaban[(index).toString()]==f?Colors.red:Colors.green,);
+  }
+}
