@@ -158,11 +158,10 @@ Future<void> deletUser(String id)async{
       return ref.child('banksoal/$idsoalnya/published').set(false).then((_)=>print('unpublish sukses'));
     });
   }
-
-  Future<void> ngetesBuatSoalLangsungPushtapiFalse()async{
+//----------------------buat soal v2-------------------------------------------------------------
+  Future<void> ngetesBuatSoalLangsungPushtapiFalse(Map<String,dynamic> dataPaket)async{
     var anu = ref.child('banksoal').push().key;
-    return ref.child('banksoal/$anu').set({}).then((_){
-      return ref.child('carisoal/kelas/mapel/$anu').set({"publised":false});
-    });
+    await ref.child('banksoal/$anu').set({});
+    await ref.child('carisoal/kelas/mapel/$anu').set({"publised":false});
   }
 }  

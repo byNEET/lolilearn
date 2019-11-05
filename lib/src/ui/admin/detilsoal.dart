@@ -54,7 +54,7 @@ class _DetilSoalAdminPageState extends State<DetilSoalAdminPage> {
              snapshot.hasData?
              snapshot.data.soalnye==null? Center(child: Text('data soal tidak ada'),):
              Container(child: Column(children: List<Widget>.generate(snapshot.data.soalnye.length-1, (int i)=>ListTile(
-                title: Text("${i+1} ."+snapshot.data.soalnye[i+1].pertanyaan),
+                title: Text("${i+1} ."+snapshot.data.soalnye[i+1].pertanyaan,maxLines: 2,overflow: TextOverflow.ellipsis,),
                 subtitle: Divider(),
                 onTap: ()async{
                   bsoal.tsoal=TextEditingController(text: snapshot.data.soalnye[i+1].pertanyaan);

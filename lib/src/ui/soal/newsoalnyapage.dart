@@ -3,7 +3,6 @@ import 'package:adminkursus/src/provider/jawabanprov.dart';
 import 'package:adminkursus/src/provider/newloginprov.dart';
 import 'package:adminkursus/src/provider/soalRepositoryProv.dart';
 import 'package:adminkursus/src/service/realdb_api.dart';
-import 'package:adminkursus/src/service/systemcall.dart';
 import 'package:adminkursus/src/ui/resultnilai_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tex/flutter_tex.dart';
@@ -138,7 +137,7 @@ class TabItemWiget extends StatelessWidget {
   Widget build(BuildContext context) {
     final jawabanProv = Provider.of<JawabanProv>(context);
     return Tab(
-              child: Text(f.toString(),style: TextStyle(color: (jawabanProv.listJawaban[f.toString()]==null)?Colors.black:Colors.red),),
+              child: Text(f.toString(),style: TextStyle(color: (jawabanProv.listJawaban[f.toString()]==null)?Colors.white:Colors.orangeAccent),),
             );
   }
 }
@@ -185,6 +184,12 @@ class PilihanJwaban extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final jawabanProv = Provider.of<JawabanProv>(context);
-    return Container(child: Text('$f.'),color: jawabanProv.listJawaban[(index).toString()]==f?Colors.red:Colors.green,);
+    return Card(
+      color: jawabanProv.listJawaban[(index).toString()]==f?Colors.orangeAccent:Colors.white,
+          child: Container(child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text('$f.'),
+      ),),
+    );
   }
 }
