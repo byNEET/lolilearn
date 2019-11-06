@@ -1,5 +1,4 @@
 import 'package:adminkursus/src/model/banksoall_quicktype.dart';
-import 'package:adminkursus/src/model/carisoal_model.dart';
 import 'package:adminkursus/src/provider/buatsoalprov.dart';
 import 'package:adminkursus/src/service/realdb_api.dart';
 import 'package:adminkursus/src/ui/admin/setSoalNo.dart';
@@ -36,11 +35,7 @@ class _DetilSoalAdminPageState extends State<DetilSoalAdminPage> {
             snapshot.data.published==false?
             RaisedButton(child: Text('publish now'),onPressed: ()async{
               var data = snapshot.data;
-              api.pushPaketSoal(data.kelas, data.mapel, CariSoalModel(
-                idsoalnya: data.id,
-                jenis: data.jenis,
-                titel: data.titel
-              )).then((_)=>setState((){}));
+              api.publishSoaltrueV2(kelas:data.kelas,mapel: data.mapel,idsoal:data.id).then((_)=>setState((){}));
             },):Text('sudah publish'):null:CircularProgressIndicator(),
           ],),
           body: SingleChildScrollView(

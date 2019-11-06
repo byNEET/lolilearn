@@ -81,7 +81,7 @@ Future<void> deletUser(String id)async{
   //-------------------------------------soal-------------------------------------------------
   Future<List<CariSoalModel>> cariSoal(String kelas,String mapel) async{
     print('cari soal');
-    var getdata =await  ref.child('carisoal/$kelas/$mapel').once();
+    var getdata =await  ref.child('carisoal/$kelas/$mapel').orderByChild("published").equalTo(true).once();
     Map coeg = getdata.value;
     print(coeg);
     List<CariSoalModel> list=[];
@@ -159,9 +159,41 @@ Future<void> deletUser(String id)async{
     });
   }
 //----------------------buat soal v2-------------------------------------------------------------
-  Future<void> ngetesBuatSoalLangsungPushtapiFalse(Map<String,dynamic> dataPaket)async{
-    var anu = ref.child('banksoal').push().key;
-    await ref.child('banksoal/$anu').set({});
-    await ref.child('carisoal/kelas/mapel/$anu').set({"publised":false});
+
+  Future<List<CariSoalModel>> cariSoalAdmin(String kelas,String mapel) async{
+    print('cari soal');
+    var getdata =await  ref.child('carisoal/$kelas/$mapel').once();
+    Map coeg = getdata.value;
+    print(coeg);
+    List<CariSoalModel> list=[];
+    if (coeg!=null){
+      coeg.forEach((k,v)=>list.add(CariSoalModel.fromMap(k,v)));
+    return list;
+    }else{
+      return null;
+    }
   }
+
+  Future<void> ngetesBuatSoalLangsungPushtapiFalse(Map<String,dynamic> data)async{
+    var anu = ref.child('banksoal').push().key;
+    await ref.child('banksoal/$anu').set(data);
+    await ref.child('carisoal/${data["kelas"]}/${data["mapel"]}/$anu').set({
+      "published":false,
+      "tingkat":data["tingkat"],
+      "idsoal":anu,
+      "jenis":data["jenis"],
+      "titel":data["titel"]});
+  }
+
+  Future<void> publishSoaltrueV2({String kelas,String mapel, String idsoal})async{
+    await ref.child('banksoal/$idsoal/published').set(true);
+    await ref.child('carisoal/$kelas/$mapel/$idsoal/published').set(true);
+  }
+
+  Future<void> unPublishSoalV2(String kelas,String mapel,String id)async{
+    return ref.child('carisoal/$kelas/$mapel/$id/published')..set(false).then((_){
+      return ref.child('banksoal/$id/published').set(false).then((_)=>print('unpublish sukses'));
+    });
+  }
+  
 }  

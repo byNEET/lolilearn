@@ -87,7 +87,7 @@ class BuatPaketSoalPage extends StatelessWidget {
              RaisedButton(
                child: Text('submit'),
                onPressed: ()async{
-                 api.buatPaketSoal({
+                 api.ngetesBuatSoalLangsungPushtapiFalse({
                    "tingkat":bsoal.tingkat,
                    "kelas": bsoal.kelas,
                    "mapel": bsoal.mapel,

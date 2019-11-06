@@ -83,7 +83,7 @@ class _CariSoalVAdminState extends State<CariSoalVAdmin> {
               Divider(),
               (search.kelas==null || search.mapel==null)?Container():
               FutureBuilder<List<CariSoalModel>>(
-                future: db.cariSoal(search.kelas, search.mapel),
+                future: db.cariSoalAdmin(search.kelas, search.mapel),
                 builder: (context,snapsut){
                   print('apapa'+snapsut.data.toString());
                   return snapsut.connectionState==ConnectionState.done?snapsut.hasData?
@@ -100,7 +100,7 @@ class _CariSoalVAdminState extends State<CariSoalVAdmin> {
                             content: Text(val.jenis),
                             actions: <Widget>[
                               FlatButton(child: Text('batal'),onPressed: ()=>Navigator.pop(context),),
-                              FlatButton(child: Text('unpublish',style: TextStyle(color: Colors.red),),onPressed: ()=>db.unPublishSoal(search.kelas, search.mapel, val.id, val.idsoalnya).then((_)=>Navigator.pop(context)),),
+                              FlatButton(child: Text('unpublish',style: TextStyle(color: Colors.red),),onPressed: ()=>db.unPublishSoalV2(search.kelas, search.mapel, val.id).then((_)=>Navigator.pop(context)),),
                             ],
                           )).then((_){setState(() {});});
                         },

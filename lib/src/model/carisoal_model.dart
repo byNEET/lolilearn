@@ -2,14 +2,16 @@ import 'package:firebase_database/firebase_database.dart';
 
 class CariSoalModel{
   String id,idsoalnya,jenis,titel;
-  CariSoalModel({this.id,this.idsoalnya,this.jenis,this.titel});
+  bool published;
+  CariSoalModel({this.id,this.idsoalnya,this.jenis,this.titel,this.published});
 
   factory CariSoalModel.fromRealDb(DataSnapshot data){
     return CariSoalModel(
       id: data.key,
       idsoalnya: data.value["idsoal"],
       jenis: data.value["jenis"],
-      titel: data.value["titel"]
+      titel: data.value["titel"],
+      published: data.value["published"]
     );
   }
 
@@ -18,7 +20,8 @@ class CariSoalModel{
       id: k,
       idsoalnya: v["idsoal"],
       jenis: v["jenis"],
-      titel: v["titel"]
+      titel: v["titel"],
+      published: v["published"]
     );
   }
 
@@ -26,7 +29,8 @@ class CariSoalModel{
     return{
       "idsoal":idsoalnya,
       "jenis":jenis,
-      "titel":titel
+      "titel":titel,
+      "published":published
     };
   }
 }
