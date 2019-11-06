@@ -38,6 +38,7 @@ class SetSoalNo extends StatelessWidget {
         )).then((onValue)=>onValue??false);
             },
             child: Scaffold(
+             
         appBar: AppBar(title: Text("soal no: $nosoal"),
         bottom: TabBar(onTap: (i)=>SystemChannels.textInput.invokeMethod('TextInput.hide'),
             tabs: <Widget>[
@@ -61,82 +62,81 @@ class TabEditCoeg extends StatelessWidget {
   TabEditCoeg({this.nosoal,this.idsoal});
 
 
-  final _formkey = GlobalKey<FormState>();
+ // final _formkeys = GlobalKey<FormState>();
   final RealdbApi api = RealdbApi();
   @override
   Widget build(BuildContext context) {
     final bsoal = Provider.of<BuatSoalProv>(context);
-    return SingleChildScrollView(child: Form( key: _formkey,
-          child: Column(children: <Widget>[
-             TextFormField(
-                  controller: bsoal.tsoal,
-                  decoration: InputDecoration(labelText: 'isi soal'),
-                  validator: (i)=>i.length>=1?null:"tak bolehkosong",
-                  minLines: 4,
-                  maxLines: 5,
-                ),
-                Divider(),
-                SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: bsoal.tjawabanA,
-                   validator: (i)=>i.length>=1?null:"tak bolehkosong",
-                  decoration: InputDecoration(labelText: 'Pilihan A:'),
-                ),
-                TextFormField( validator: (i)=>i.length>=1?null:"tak bolehkosong",
-                  controller: bsoal.tjawabanB,
-                  decoration: InputDecoration(labelText: 'Pilihan B:'),
-                ),
-                TextFormField( validator: (i)=>i.length>=1?null:"tak bolehkosong",
-                  controller: bsoal.tjawabanC,
-                  decoration: InputDecoration(labelText: 'Pilihan C:'),
-                ),
-                TextFormField( validator: (i)=>i.length>=1?null:"tak bolehkosong",
-                  controller: bsoal.tjawabanD,
-                  decoration: InputDecoration(labelText: 'Pilihan D:'),
-                ),
-                Divider(),
-                Text('jawaban benar:'),
-                DropdownButtonFormField<String>(
-                  validator: (i)=>i.length>=1?null:"tak bolehkosong",
-                  hint: Text('pilih Jawaban benar'),
-                  value: bsoal.jawabanBenar,
-                  onChanged: (val) {
-                    bsoal.jawabanBenar = val;
-                  },
-                  items: ["A","B","C","D"].map((e) {
-                    return DropdownMenuItem(
-                      value: e,
-                      child: Text(e),
-                    );
-                  }).toList(),
-                ),
-                TextFormField( validator: (i)=>i.length>=1?null:"tak bolehkosong",
-                  controller: bsoal.tPembahasan,
-                  decoration: InputDecoration(labelText: 'Pembahasan :'),
-                ),
-                RaisedButton(child: Text('submit'),onPressed: ()async{
-                  if (_formkey.currentState.validate()){
-                    return api.setSoal(idsoal, nosoal, Soalnye(
-                    pertanyaan: SystemCall.encodetoBase64(bsoal.tsoal.text),
-                    jawaban: {
-                      "A":SystemCall.encodetoBase64(bsoal.tjawabanA.text),
-                      "B":SystemCall.encodetoBase64(bsoal.tjawabanB.text),
-                      "C":SystemCall.encodetoBase64(bsoal.tjawabanC.text),
-                      "D":SystemCall.encodetoBase64(bsoal.tjawabanD.text),
-                    },
-                    jawabanbenar: bsoal.jawabanBenar,
-                    pembahasan: SystemCall.encodetoBase64(bsoal.tPembahasan.text)
-                  )).then((_){
-                    bsoal.clear();
-                    Navigator.pop(context);
-                  });
-                  }
-                  
-                },)
-          ],),
-    ),);
+    return SingleChildScrollView(
+      child: Column(children: <Widget>[
+         TextField(
+        controller: bsoal.tsoal,
+        decoration: InputDecoration(labelText: 'isi soal'),
+        //validator: (i)=>i.length>=1?null:"tak bolehkosong",
+        minLines: 4,
+        maxLines: 5,
+      ),
+      Divider(),
+      SizedBox(
+        height: 10,
+      ),
+      TextField(
+        controller: bsoal.tjawabanA,
+         //validator: (i)=>i.length>=1?null:"tak bolehkosong",
+        decoration: InputDecoration(labelText: 'Pilihan A:'),
+      ),
+      TextField( //validator: (i)=>i.length>=1?null:"tak bolehkosong",
+        controller: bsoal.tjawabanB,
+        decoration: InputDecoration(labelText: 'Pilihan B:'),
+      ),
+      TextField( //validator: (i)=>i.length>=1?null:"tak bolehkosong",
+        controller: bsoal.tjawabanC,
+        decoration: InputDecoration(labelText: 'Pilihan C:'),
+      ),
+      TextField( //validator: (i)=>i.length>=1?null:"tak bolehkosong",
+        controller: bsoal.tjawabanD,
+        decoration: InputDecoration(labelText: 'Pilihan D:'),
+      ),
+      Divider(),
+      Text('jawaban benar:'),
+      DropdownButton<String>(
+        //validator: (i)=>i.length>=1?null:"tak bolehkosong",
+        hint: Text('pilih Jawaban benar'),
+        value: bsoal.jawabanBenar,
+        onChanged: (val) {
+          bsoal.jawabanBenar = val;
+        },
+        items: ["A","B","C","D"].map((e) {
+          return DropdownMenuItem(
+            value: e,
+            child: Text(e),
+          );
+        }).toList(),
+      ),
+      TextField( //validator: (i)=>i.length>=1?null:"tak bolehkosong",
+        controller: bsoal.tPembahasan,
+        decoration: InputDecoration(labelText: 'Pembahasan :'),
+      ),
+      RaisedButton(child: Text('submit'),onPressed: ()async{
+        if (true){
+          return api.setSoal(idsoal, nosoal, Soalnye(
+          pertanyaan: SystemCall.encodetoBase64(bsoal.tsoal.text),
+          jawaban: {
+            "A":SystemCall.encodetoBase64(bsoal.tjawabanA.text),
+            "B":SystemCall.encodetoBase64(bsoal.tjawabanB.text),
+            "C":SystemCall.encodetoBase64(bsoal.tjawabanC.text),
+            "D":SystemCall.encodetoBase64(bsoal.tjawabanD.text),
+          },
+          jawabanbenar: bsoal.jawabanBenar,
+          pembahasan: SystemCall.encodetoBase64(bsoal.tPembahasan.text)
+        )).then((_){
+          bsoal.clear();
+          Navigator.pop(context);
+        });
+        }
+        
+      },)
+      ],),);
   }
 }
 
@@ -151,8 +151,11 @@ class TabPreviewCoeg extends StatelessWidget {
         Card(child: ListTile(leading: Text('B'),title: TeXView(teXHTML: bsoal.tjawabanB.text,),)),
         Card(child: ListTile(leading: Text('C'),title: TeXView(teXHTML: bsoal.tjawabanC.text,),)),
         Card(child: ListTile(leading: Text('D'),title: TeXView(teXHTML: bsoal.tjawabanD.text,),)),
+        Divider(),
         SizedBox(height: 20,),
-
+        Text('Jawaban Benar: ${bsoal.jawabanBenar}'),
+        Divider(),
+        Card(child: ListTile(leading: Text('D'),title: TeXView(teXHTML: bsoal.tPembahasan.text,),)),
       ],),
     );
   }

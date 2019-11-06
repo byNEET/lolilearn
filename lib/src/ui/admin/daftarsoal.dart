@@ -27,7 +27,7 @@ class _DaftarSoalAdminPageState extends State<DaftarSoalAdminPage> {
                 floatingActionButton: FloatingActionButton(
                   child: Icon(Icons.add),
                   onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => BuatPaketSoalPage())).then((onValue)=>setState((){})),
+                      MaterialPageRoute(builder: (_) => BuatPaketSoalPage())).then((_)=>setState((){})),
                 ),
                 body: FutureBuilder<List<BanksoalModel>>(
                   future: api.getListSoal(),
@@ -79,5 +79,21 @@ class BodySeparateByPublished extends StatelessWidget {
 
       ),
     );
+  }
+}
+
+class FloatingiconAdd extends StatefulWidget {
+  @override
+  _FloatingiconAddState createState() => _FloatingiconAddState();
+}
+
+class _FloatingiconAddState extends State<FloatingiconAdd> {
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => BuatPaketSoalPage())).then((_)=>setState((){})),
+                );
   }
 }

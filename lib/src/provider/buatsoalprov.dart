@@ -11,7 +11,7 @@ class BuatSoalProv with ChangeNotifier{
     notifyListeners();
   }
 
-  String _jawabanBenar;
+  String _jawabanBenar="A";
   String get jawabanBenar => _jawabanBenar;
   set jawabanBenar(String val){
     _jawabanBenar =val;
@@ -26,7 +26,7 @@ class BuatSoalProv with ChangeNotifier{
   TextEditingController tPembahasan =  TextEditingController(text: "");
 
   void clear(){
-    _jawabanBenar=null;
+    _jawabanBenar="A";
     tsoal.clear();
     tjawabanA.clear();
     tjawabanB.clear();
