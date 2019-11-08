@@ -45,7 +45,7 @@ class MateriModel {
         "mapel": mapel,
         "tingkat": tingkat,
         "titel": titel,
-        "published" : false
+        "published" : true  //ngetes buat materi langsung push
     };
 
     Map<String, dynamic> toMapEdit() => {
