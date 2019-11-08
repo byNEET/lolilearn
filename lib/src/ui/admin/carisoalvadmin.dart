@@ -4,6 +4,7 @@ import 'package:adminkursus/src/provider/searchprov.dart';
 import 'package:adminkursus/src/service/realdb_api.dart';
 import 'package:adminkursus/src/ui/admin/buatPaketsoal.dart';
 import 'package:adminkursus/src/ui/admin/detilsoal.dart';
+import 'package:adminkursus/src/ui/admin/listnilai_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +33,7 @@ class _CariSoalVAdminState extends State<CariSoalVAdmin> {
    }
    Widget _builButtonindialog({String titel, VoidCallback ontap,Color color}){
      return Padding(padding: EdgeInsets.all(4),
-     child: FlatButton(child: Text(titel,),onPressed: ontap,),);
+     child: FlatButton(color: Colors.blueGrey,child: Text(titel,style: TextStyle(color: Colors.white),),onPressed: ontap,),);
    }
 
     return Scaffold(
@@ -114,19 +115,20 @@ class _CariSoalVAdminState extends State<CariSoalVAdmin> {
                         onTap: (){
                           return showDialog(context: context,builder: (_)=>AlertDialog(
                             title: Text(val.titel),  
-                            content: Column(
+                            content: Column(mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Text(val.jenis),
                                 Divider(),
                                 _builButtonindialog(titel: 'Edit soal',ontap: ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>DetilSoalAdminPage(soalCoeg: val,)))),
                                 val.published?
                                 _builButtonindialog(titel: 'Unpublish',ontap: ()=>db.unPublishSoalV2(val.kelas, val.mapel, val.id).then((_)=>Navigator.pop(context))):
-                                _builButtonindialog(titel: 'publish',ontap: ()=>db.publishSoaltrueV2(kelas:val.kelas, mapel:val.mapel, idsoal:val.id).then((_)=>Navigator.pop(context)))
+                                _builButtonindialog(titel: 'publish',ontap: ()=>db.publishSoaltrueV2(kelas:val.kelas, mapel:val.mapel, idsoal:val.id).then((_)=>Navigator.pop(context))),
+                                _builButtonindialog(titel: "List Nilai", ontap: ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>ListNilaiPage(dsoal: val,))))
                               ],
                             ),
                             actions: <Widget>[
-                              FlatButton(child: Text('batal'),onPressed: ()=>Navigator.pop(context),),
-                              FlatButton(child: Text('Hapus',style: TextStyle(color: Colors.red),),onPressed: ()=>showDialog(context: _,builder: (__)=>AlertDialog(
+                              
+                              FlatButton(child: Text('Hapus! (Danger)',style: TextStyle(color: Colors.red),),onPressed: ()=>showDialog(context: _,builder: (__)=>AlertDialog(
                                 title: Text('yakin hapus ?'),
                                 content: Text('setelah hapus tidak bisa dikembalikan lagi !!'),
                                 actions: <Widget>[
@@ -135,6 +137,7 @@ class _CariSoalVAdminState extends State<CariSoalVAdmin> {
                                   
                                 ],
                               )).then((_)=>Navigator.pop(context)),),
+                              FlatButton(child: Text('batal'),onPressed: ()=>Navigator.pop(context),),
                             ],
                           )).then((_){setState(() {});});
                         },

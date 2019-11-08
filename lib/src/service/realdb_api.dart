@@ -1,5 +1,6 @@
 import 'package:adminkursus/src/model/banksoall_quicktype.dart';
 import 'package:adminkursus/src/model/listbanksoal_model.dart';
+import 'package:adminkursus/src/model/materi_model.dart';
 import 'package:adminkursus/src/model/usernew_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -125,6 +126,31 @@ Future<void> deletUser(String id)async{
     });    
   }
 
+//--------------------------------------------------materi-------------------------------------------
+Future<List<MateriModel>> getListMateri(String tingkat,String mapel)async{
+  var data = await ref.child('materi/$tingkat/$mapel').orderByChild('published').equalTo(true).once();
+  if (data.value!=null){
+      Map oke =data.value;
+      List<MateriModel> coeg=[];
+      oke.forEach((k,v)=>coeg.add(MateriModel.fromMap(k,v)));
+      return coeg;
+      }else{return null;}
+}
+Future<List<MateriModel>> getListMateriAdmin(String tingkat,String mapel)async{
+  var data = await ref.child('materi/$tingkat/$mapel').once();
+  if (data.value!=null){
+      Map oke =data.value;
+      List<MateriModel> coeg=[];
+      oke.forEach((k,v)=>coeg.add(MateriModel.fromMap(k,v)));
+      return coeg;
+      }else{return null;}
+}
+Future<void> buatmateri(MateriModel data)async{
+  await ref.child('materi/${data.tingkat}/${data.mapel}').push().set(data.toMap());
+}
+Future<void> editmateri(MateriModel data)async{
+  await ref.child('materi/${data.tingkat}/${data.mapel}/${data.id}').set(data.toMap());
+}
 //------------------------------------------------------------admin----------------------------------
 
   Future<List<Listbanksoal>> getListSoal()async{

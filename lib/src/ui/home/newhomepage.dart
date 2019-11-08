@@ -1,6 +1,7 @@
 // import 'package:adminkursus/src/helper/Screen.dart';
 import 'package:adminkursus/src/provider/newloginprov.dart';
 import 'package:adminkursus/src/ui/admin/adminhome.dart';
+import 'package:adminkursus/src/ui/materi/listmateri_page.dart';
 import 'package:adminkursus/src/ui/soal/carisoalpage.dart';
 // import 'package:adminkursus/src/ui/tentang/tentang_view.dart';
 // import 'package:adminkursus/src/widgets/carousel_movie_widget.dart';
@@ -160,41 +161,44 @@ class _NewHomePageState extends State<NewHomePage> {
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            width: 145,
-                            height: 100,
-                            // margin: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.blueGrey,
-                              gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                stops: [
-                                  0.3,
-                                  0.9,
-                                ],
-                                colors: [
-                                  Colors.orange[200],
-                                  Colors.orangeAccent,
+                          child: GestureDetector(
+                            onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>ListMateriPage())),
+                                                      child: Container(
+                              width: 145,
+                              height: 100,
+                              // margin: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.blueGrey,
+                                gradient: LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                  stops: [
+                                    0.3,
+                                    0.9,
+                                  ],
+                                  colors: [
+                                    Colors.orange[200],
+                                    Colors.orangeAccent,
+                                  ],
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    'images/tips.png',
+                                    height: 40,
+                                    width: 40,
+                                  ),
+                                  Text(
+                                    'Materi',
+                                    style: TextStyle(
+                                      fontFamily: "Poppins-Medium",
+                                    ),
+                                  ),
                                 ],
                               ),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Image.asset(
-                                  'images/tips.png',
-                                  height: 40,
-                                  width: 40,
-                                ),
-                                Text(
-                                  'Materi',
-                                  style: TextStyle(
-                                    fontFamily: "Poppins-Medium",
-                                  ),
-                                ),
-                              ],
                             ),
                           ),
                         ),

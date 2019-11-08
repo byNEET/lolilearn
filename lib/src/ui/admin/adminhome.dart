@@ -1,5 +1,6 @@
 import 'package:adminkursus/src/ui/admin/carisoalvadmin.dart';
 import 'package:adminkursus/src/ui/admin/daftarsoal.dart';
+import 'package:adminkursus/src/ui/admin/listmateriadmin_page.dart';
 import 'package:adminkursus/src/ui/admin/usermanagementpage.dart';
 import 'package:flutter/material.dart';
  
@@ -275,7 +276,133 @@ class AdminHomePage extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
+              ),
+              //---------------------------------------------------------materi------------------------
+
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 12.0, top: 20.0, bottom: 15.0),
+                child: Text(
+                  "Materi Management",
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ListMateriAdminPage()));
+                    },
+                    child: Container(
+                      width: 150,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          stops: [
+                            0.4,
+                            0.7,
+                          ],
+                          colors: <Color>[
+                            Colors.orangeAccent,
+                            Colors.orange,
+                          ],
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Icon(
+                                Icons.book,
+                                color: Colors.white,
+                                size: 30.0,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'List Materi',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Navigator.of(context).push(MaterialPageRoute(
+                  //         builder: (context) => TambahUserPage()));
+                  //   },
+                  //   child: Container(
+                  //     width: 150,
+                  //     height: 100,
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(10),
+                  //       gradient: LinearGradient(
+                  //         begin: Alignment.centerRight,
+                  //         end: Alignment.centerLeft,
+                  //         stops: [
+                  //           0.4,
+                  //           0.7,
+                  //         ],
+                  //         colors: <Color>[
+                  //           Colors.blue[700],
+                  //           Colors.blue,
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     child: Column(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //       children: <Widget>[
+                  //         Padding(
+                  //           padding: const EdgeInsets.only(left: 10),
+                  //           child: Align(
+                  //             alignment: Alignment.centerLeft,
+                  //             child: Icon(
+                  //               Icons.add_circle_outline,
+                  //               color: Colors.white,
+                  //               size: 30.0,
+                  //             ),
+                  //           ),
+                  //         ),
+                  //         Padding(
+                  //           padding: const EdgeInsets.only(left: 10.0),
+                  //           child: Align(
+                  //             alignment: Alignment.centerLeft,
+                  //             child: Text(
+                  //               'Tambah Murid',
+                  //               style: TextStyle(
+                  //                 color: Colors.white,
+                  //                 fontSize: 17.0,
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                ],
+              ),
             ],
           ),
         ),

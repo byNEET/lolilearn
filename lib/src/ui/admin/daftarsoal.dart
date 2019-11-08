@@ -42,8 +42,8 @@ class _DaftarSoalAdminPageState extends State<DaftarSoalAdminPage> {
                         children: data
                             .map((f) => Container(
                                   child: ListTile(
-                                    title: Text(f.titel),
-                                    subtitle: Text(f.kelas +" : " +f.mapel +" : " +f.jenis),
+                                    title: Text(f.titel??""),
+                                    subtitle: Text((f.kelas)??" " + " : " + (f.mapel)??" " + " : " + (f.jenis)??" "),
                                     onTap: () => Navigator.push(
                                         context,
                                         MaterialPageRoute(
