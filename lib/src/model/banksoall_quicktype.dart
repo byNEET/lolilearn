@@ -22,6 +22,7 @@ class BanksoalModel {
     Map<String,Selesai> selesai;
     List<Soalnye> soalnye;
     String titel;
+    String idsoal;
 
     BanksoalModel({
       this.id,
@@ -33,12 +34,14 @@ class BanksoalModel {
         this.soalnye,
         this.titel, 
         this.tingkat,
-        this.createat
+        this.createat,
+        this.idsoal
     });
 
     factory BanksoalModel.fromJson(String id,Map<dynamic, dynamic> json) => BanksoalModel(
         id:id,
         jenis: json["jenis"],
+        idsoal: json["idsoal"],
         kelas: json["kelas"],
         mapel: json["mapel"],
         published: json["published"],
@@ -53,6 +56,7 @@ class BanksoalModel {
         "jenis": jenis,
         "kelas": kelas,
         "mapel": mapel,
+        "idsoal":idsoal,
         "published": published,
         "selesai": selesai,
         "soalnye": List<dynamic>.from(soalnye.map((x) => x == null ? null : x.toJson())),

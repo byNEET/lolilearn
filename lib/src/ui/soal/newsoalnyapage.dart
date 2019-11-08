@@ -1,16 +1,18 @@
 import 'package:adminkursus/src/model/banksoall_quicktype.dart';
+import 'package:adminkursus/src/model/listbanksoal_model.dart';
 import 'package:adminkursus/src/provider/jawabanprov.dart';
 import 'package:adminkursus/src/provider/newloginprov.dart';
 import 'package:adminkursus/src/provider/soalRepositoryProv.dart';
 import 'package:adminkursus/src/service/realdb_api.dart';
-import 'package:adminkursus/src/ui/resultnilai_page.dart';
+import 'package:adminkursus/src/ui/soal/resultnilai_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tex/flutter_tex.dart';
 import 'package:provider/provider.dart';
 
 class NewSoalnyaPage extends StatelessWidget {
   final String idSoalnya;
-  NewSoalnyaPage({this.idSoalnya});
+  final Listbanksoal detilsoal;
+  NewSoalnyaPage({this.idSoalnya,this.detilsoal});
 
   final RealdbApi db = RealdbApi();
 
@@ -34,7 +36,7 @@ class NewSoalnyaPage extends StatelessWidget {
           ],
         )).then((onValue)=>onValue??false);
       },
-          child: FutureBuilder<BanksoalModel>(
+          child: FutureBuilder<List<Soalnye>>(
             future: Provider.of<SoalRepositoryProv>(context).getsetBankSoalnye(idSoalnya),
             builder: (context,snapsut){
               print(snapsut.data);
@@ -45,15 +47,15 @@ class NewSoalnyaPage extends StatelessWidget {
                // key: GlobalKey(),
                key: UniqueKey(),
                 initialIndex: 0,
-              length: snapsut.data.soalnye.length-1,
+              length: snapsut.data.length-1,
                         child: Scaffold(
                          key: UniqueKey(),
-          appBar: AppBar(title: Text(snapsut.data.mapel+snapsut.data.kelas),actions: <Widget>[
-            TombolSudahdiUjungKananAppbar(idsoal: snapsut.data.id,jumlahsoal: snapsut.data.soalnye.length-1,)
+          appBar: AppBar(title: Text(detilsoal.mapel+detilsoal.kelas),actions: <Widget>[
+            TombolSudahdiUjungKananAppbar(idsoal: detilsoal.id,jumlahsoal: snapsut.data.length-1,)
           ],
           bottom: TabBar(
             isScrollable: true,
-              tabs: List<int>.generate(snapsut.data.soalnye.length-1, 
+              tabs: List<int>.generate(snapsut.data.length-1, 
               //(i)=>i+1).map((f)=>
               (i)=>i+1).map((f)=>
               TabItemWiget(f: f,)
@@ -61,9 +63,9 @@ class NewSoalnyaPage extends StatelessWidget {
           ),),
           body: TabBarView(
             key: UniqueKey(),
-            children:List<Widget>.generate(snapsut.data.soalnye.length-1, (int index){
+            children:List<Widget>.generate(snapsut.data.length-1, (int index){
             //  if (snapsut.data.soalnye[index+1]!=null){
-                return TabSoalBody(key: UniqueKey(),soalnye: snapsut.data.soalnye,index: index+1,);
+                return TabSoalBody(key: UniqueKey(),soalnye: snapsut.data,index: index+1,);
             // }else{
             //    return Container(child: Text('data null: be intro, '),);
             //  }

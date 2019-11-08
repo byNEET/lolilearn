@@ -1,4 +1,5 @@
 import 'package:adminkursus/src/model/banksoall_quicktype.dart';
+import 'package:adminkursus/src/model/listbanksoal_model.dart';
 import 'package:adminkursus/src/provider/buatsoalprov.dart';
 import 'package:adminkursus/src/service/realdb_api.dart';
 import 'package:adminkursus/src/ui/admin/setSoalNo.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DetilSoalAdminPage extends StatefulWidget {
-  final BanksoalModel soalCoeg;
+  final Listbanksoal soalCoeg;
   DetilSoalAdminPage({this.soalCoeg});
 
   @override

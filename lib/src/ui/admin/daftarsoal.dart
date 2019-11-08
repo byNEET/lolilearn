@@ -1,4 +1,5 @@
 import 'package:adminkursus/src/model/banksoall_quicktype.dart';
+import 'package:adminkursus/src/model/listbanksoal_model.dart';
 import 'package:adminkursus/src/service/realdb_api.dart';
 import 'package:adminkursus/src/ui/admin/buatPaketsoal.dart';
 import 'package:adminkursus/src/ui/admin/detilsoal.dart';
@@ -29,7 +30,7 @@ class _DaftarSoalAdminPageState extends State<DaftarSoalAdminPage> {
                   onPressed: () => Navigator.push(context,
                       MaterialPageRoute(builder: (_) => BuatPaketSoalPage())).then((_)=>setState((){})),
                 ),
-                body: FutureBuilder<List<BanksoalModel>>(
+                body: FutureBuilder<List<Listbanksoal>>(
                   future: api.getListSoal(),
                   builder: (context, snapshot) {
                     

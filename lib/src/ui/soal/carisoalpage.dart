@@ -1,13 +1,13 @@
 import 'package:adminkursus/src/data/staticdata.dart';
 import 'package:adminkursus/src/model/banksoall_quicktype.dart';
-import 'package:adminkursus/src/model/carisoal_model.dart';
+import 'package:adminkursus/src/model/listbanksoal_model.dart';
 import 'package:adminkursus/src/provider/jawabanprov.dart';
 import 'package:adminkursus/src/provider/newloginprov.dart';
 import 'package:adminkursus/src/provider/searchprov.dart';
 import 'package:adminkursus/src/provider/soalRepositoryProv.dart';
 import 'package:adminkursus/src/service/realdb_api.dart';
-import 'package:adminkursus/src/ui/resultnilai_page.dart';
 import 'package:adminkursus/src/ui/soal/newsoalnyapage.dart';
+import 'package:adminkursus/src/ui/soal/resultnilai_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -81,7 +81,7 @@ class CariSoalPage extends StatelessWidget {
               ),
               Divider(),
               (search.kelas==null || search.mapel==null)?Container():
-              FutureBuilder<List<CariSoalModel>>(
+              FutureBuilder<List<Listbanksoal>>(
                 future: db.cariSoal(search.kelas, search.mapel),
                 builder: (context,snapsut){
                   print('apapa'+snapsut.data.toString());
@@ -91,18 +91,18 @@ class CariSoalPage extends StatelessWidget {
                   Column(
                     children:snapsut.data.map((val)=> 
                     FutureBuilder<Selesai>(
-                      future: db.getUserSelesaiDetil(val.idsoalnya, Provider.of<NewLoginProv>(context).userNew.id),
+                      future: db.getUserSelesaiDetil(val.idsoal, Provider.of<NewLoginProv>(context).userNew.id),
                       builder: (context, snapshot) {
                         return ListTile(title: Text(val.titel),
                         subtitle: Text('Jenis ujian: '+val.jenis),
                         trailing: SizedBox(width: 40,child: snapshot.connectionState==ConnectionState.done?snapshot.hasData?Text(snapshot.data.nilai.toString()):Container():Container(child: LinearProgressIndicator(),)),
                         onTap: snapshot.connectionState==ConnectionState.done?snapshot.hasData? 
                         ()async{
-                          db.getBankSoalnya(val.idsoalnya).then((onValue){
+                          db.getSoalnye(val.idsoal).then((onValue){
                             var okes = onValue;
-                            Provider.of<SoalRepositoryProv>(context).banksoal=onValue;
+                            Provider.of<SoalRepositoryProv>(context).soalnye=onValue;
                             print("okes"+okes.toString());
-                            Provider.of<JawabanProv>(context).setAllListJawabanAndPoint(snapshot.data.jawabannye, okes.soalnye);
+                            Provider.of<JawabanProv>(context).setAllListJawabanAndPoint(snapshot.data.jawabannye, okes);
                             // var z;
                             // List<int>.generate(okes.length-1, (i)=>i+1).map((f){
                             //   print(f.toString());
@@ -114,7 +114,7 @@ class CariSoalPage extends StatelessWidget {
                         :(){
                         Provider.of<JawabanProv>(context).clear();
                         Navigator.of(context).push(MaterialPageRoute(builder: (_)=>
-                        NewSoalnyaPage(idSoalnya: val.idsoalnya,)));
+                        NewSoalnyaPage(idSoalnya: val.idsoal,detilsoal: val,)));
                         }:null,);
                       }
                     )).toList(),

@@ -1,5 +1,5 @@
 import 'package:adminkursus/src/model/banksoall_quicktype.dart';
-import 'package:adminkursus/src/model/carisoal_model.dart';
+import 'package:adminkursus/src/model/listbanksoal_model.dart';
 import 'package:adminkursus/src/model/usernew_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -42,6 +42,11 @@ Future<void> addUser(String id,String nama)async{
     pass: id,
   ).toMap()).then((_)=>print('add user $id suksess isi dua'));
 }
+
+Future<void> editUser(String id,Map<String,dynamic> data)async{
+  await ref.child('user/$id').set(data).then((_)=>print('update data user success'));
+}
+
 Future<void> deletUser(String id)async{
   return ref.child('user/$id').remove().then((_)=>print('remove user $id suksess isi dua'));
 }
@@ -79,14 +84,14 @@ Future<void> deletUser(String id)async{
   // }
 
   //-------------------------------------soal-------------------------------------------------
-  Future<List<CariSoalModel>> cariSoal(String kelas,String mapel) async{
+  Future<List<Listbanksoal>> cariSoal(String kelas,String mapel) async{
     print('cari soal');
     var getdata =await  ref.child('carisoal/$kelas/$mapel').orderByChild("published").equalTo(true).once();
     Map coeg = getdata.value;
     print(coeg);
-    List<CariSoalModel> list=[];
+    List<Listbanksoal> list=[];
     if (coeg!=null){
-      coeg.forEach((k,v)=>list.add(CariSoalModel.fromMap(k,v)));
+      coeg.forEach((k,v)=>list.add(Listbanksoal.fromMap(k,v)));
     return list;
     }else{
       return null;
@@ -122,13 +127,13 @@ Future<void> deletUser(String id)async{
 
 //------------------------------------------------------------admin----------------------------------
 
-  Future<List<BanksoalModel>> getListSoal()async{
-    var data = await ref.child('banksoal').once();
+  Future<List<Listbanksoal>> getListSoal()async{
+    var data = await ref.child('listbanksoal').once();
       print('get list soal:'+ data.value.toString());
       if (data.value!=null){
       Map oke =data.value;
-      List<BanksoalModel> coeg=[];
-      oke.forEach((k,v)=>coeg.add(BanksoalModel.fromJson(k,v)));
+      List<Listbanksoal> coeg=[];
+      oke.forEach((k,v)=>coeg.add(Listbanksoal.fromMap(k,v)));
       return coeg;
       }else{return null;}
   }
@@ -137,37 +142,38 @@ Future<void> deletUser(String id)async{
     return ref.child('banksoal/$idsoal/soalnye/$no').set(oke.toJson());
   }
 
-  Future<void> buatPaketSoal(Map<String,dynamic> data)async{
-    return ref.child('banksoal').push().set(data).then((_)=>print("buat paket soal sukses, cus input"));
-  }
+  // Future<void> buatPaketSoal(Map<String,dynamic> data)async{
+  //   return ref.child('banksoal').push().set(data).then((_)=>print("buat paket soal sukses, cus input"));
+  // }
 
-  Future<void> hapusPaketSoal(BanksoalModel data)async{
-    return ref.child('banksoal/${data.id}').remove().then((_)=>print('hapus paket soal sukses')).then((_){
-      return ref.child('carisoal/${data.kelas}/${data.mapel}/${data.id}').remove();
+  Future<void> hapusPaketSoal(Listbanksoal data)async{
+    await ref.child('banksoal/${data.id}').remove().then((_)=>print('hapus paket soal sukses')).then((_)async{
+      await ref.child('carisoal/${data.kelas}/${data.mapel}/${data.id}').remove();
+      await ref.child('listbanksoal/${data.id}').remove();
     });
   }
 
-  Future<void> pushPaketSoal(String kelas,String mapel, CariSoalModel sual)async{
-    return ref.child('carisoal/$kelas/$mapel/${sual.idsoalnya}').set(sual.toMap()).then((_)=>print("push soal sukses")).then((_){
-      return ref.child('banksoal/${sual.idsoalnya}/published').set(true).then((_)=>print('change published to true'));
-    });
-  }
+  // Future<void> pushPaketSoal(String kelas,String mapel, CariSoalModel sual)async{
+  //   return ref.child('carisoal/$kelas/$mapel/${sual.idsoalnya}').set(sual.toMap()).then((_)=>print("push soal sukses")).then((_){
+  //     return ref.child('banksoal/${sual.idsoalnya}/published').set(true).then((_)=>print('change published to true'));
+  //   });
+  // }
 
-  Future<void> unPublishSoal(String kelas,String mapel,String idpush,String idsoalnya)async{
-    return ref.child('carisoal/$kelas/$mapel/$idpush').remove().then((_){
-      return ref.child('banksoal/$idsoalnya/published').set(false).then((_)=>print('unpublish sukses'));
-    });
-  }
+  // Future<void> unPublishSoal(String kelas,String mapel,String idpush,String idsoalnya)async{
+  //   return ref.child('carisoal/$kelas/$mapel/$idpush').remove().then((_){
+  //     return ref.child('banksoal/$idsoalnya/published').set(false).then((_)=>print('unpublish sukses'));
+  //   });
+  // }
 //----------------------buat soal v2-------------------------------------------------------------
 
-  Future<List<CariSoalModel>> cariSoalAdmin(String kelas,String mapel) async{
+  Future<List<Listbanksoal>> cariSoalAdmin(String kelas,String mapel) async{
     print('cari soal');
     var getdata =await  ref.child('carisoal/$kelas/$mapel').once();
     Map coeg = getdata.value;
     print(coeg);
-    List<CariSoalModel> list=[];
+    List<Listbanksoal> list=[];
     if (coeg!=null){
-      coeg.forEach((k,v)=>list.add(CariSoalModel.fromMap(k,v)));
+      coeg.forEach((k,v)=>list.add(Listbanksoal.fromMap(k,v)));
     return list;
     }else{
       return null;
@@ -176,24 +182,48 @@ Future<void> deletUser(String id)async{
 
   Future<void> ngetesBuatSoalLangsungPushtapiFalse(Map<String,dynamic> data)async{
     var anu = ref.child('banksoal').push().key;
+    var oke = data;
+    oke["idsoal"] = anu;
     await ref.child('banksoal/$anu').set(data);
-    await ref.child('carisoal/${data["kelas"]}/${data["mapel"]}/$anu').set({
-      "published":false,
-      "tingkat":data["tingkat"],
-      "idsoal":anu,
-      "jenis":data["jenis"],
-      "titel":data["titel"]});
+    await ref.child('carisoal/${data["kelas"]}/${data["mapel"]}/$anu').set(oke);
+      // {
+      // "published":false,
+      // "tingkat":data["tingkat"],
+      // "idsoal":anu,
+      // "jenis":data["jenis"],
+      // "titel":data["titel"]});
+    await ref.child('listbanksoal/$anu').set(oke);
   }
 
   Future<void> publishSoaltrueV2({String kelas,String mapel, String idsoal})async{
     await ref.child('banksoal/$idsoal/published').set(true);
     await ref.child('carisoal/$kelas/$mapel/$idsoal/published').set(true);
+    await ref.child('listbanksoal/$idsoal/published').set(true);
   }
 
   Future<void> unPublishSoalV2(String kelas,String mapel,String id)async{
-    return ref.child('carisoal/$kelas/$mapel/$id/published')..set(false).then((_){
-      return ref.child('banksoal/$id/published').set(false).then((_)=>print('unpublish sukses'));
+    return ref.child('carisoal/$kelas/$mapel/$id/published')..set(false).then((_)async{
+      await ref.child('banksoal/$id/published').set(false).then((_)=>print('unpublish sukses'));
+      await ref.child('listbanksoal/$id/published').set(false);
     });
   }
+
+  // Future<List<CariSoalModel>> getlistDetilBanksoal()async{
+  //   var getdata = await ref.child('listbanksoal').orderByChild('createat').once();
+  //   Map coeg = getdata.value;
+  //   print(coeg);
+  //   List<CariSoalModel> list=[];
+  //   if (coeg!=null){
+  //     coeg.forEach((k,v)=>list.add(CariSoalModel.fromMap(k,v)));
+  //   return list;
+  //   }else{
+  //     return null;
+  //   }
+  // }
+  // Future<void> adddetilbanksoal(CariSoalModel data)async{
+  //   await ref.child('listbanksoal/${data.id}').set(data.toMap());
+  // }
+  //-------------------------------------------materi--------------------------------------------------
+
   
 }  

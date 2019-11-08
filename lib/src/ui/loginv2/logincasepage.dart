@@ -232,6 +232,8 @@ class _LogincoegState extends State<Logincoeg> {
                                                   content: Text(
                                                       'No Anggota atau Password salah'),
                                                 ));
+                                      }else{
+                                        newUserprov.clear();
                                       }
                                     });
                                   }
