@@ -49,6 +49,7 @@ class _LogincoegState extends State<Logincoeg> {
     super.initState();
     isLoading = false;
   }
+  
  
   @override
   Widget build(BuildContext context) {
@@ -146,9 +147,11 @@ class _LogincoegState extends State<Logincoeg> {
                                     hintStyle: TextStyle(
                                         color: Colors.grey, fontSize: 12.0)),
                                 controller: newUserprov.tid,
-                                validator: (e) => e.length < 1
+                                validator: (e) {
+                                  return e.length < 1
                                     ? "id/ No Anggota tidak boleh kosong"
-                                    : null,
+                                    : e.contains(" ")?"tak boleh ada spasi":null;
+                                },
                               ),
                               SizedBox(
                                 height: ScreenUtil.getInstance().setHeight(30),
@@ -215,6 +218,7 @@ class _LogincoegState extends State<Logincoeg> {
                               child: InkWell(
                                 onTap: () async {
                                   if (_formkey.currentState.validate()) {
+                                    
                                     setState(() {
                                       isLoading = true;
                                     });
@@ -260,6 +264,12 @@ class _LogincoegState extends State<Logincoeg> {
         ),
       ),
     );
+  }
+  @override
+  void dispose() {
+    // TODsO: implement dispose
+    _formkey.currentState.dispose();
+    super.dispose();
   }
 }
 
