@@ -3,20 +3,21 @@ import 'package:adminkursus/src/provider/newloginprov.dart';
 import 'package:adminkursus/src/ui/admin/adminhome.dart';
 import 'package:adminkursus/src/ui/materi/listmateri_page.dart';
 import 'package:adminkursus/src/ui/soal/carisoalpage.dart';
+import 'package:adminkursus/src/widgets/carousel_movie_widget.dart';
 // import 'package:adminkursus/src/ui/tentang/tentang_view.dart';
 // import 'package:adminkursus/src/widgets/carousel_movie_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
- 
+
 class NewHomePage extends StatefulWidget {
   @override
   _NewHomePageState createState() => _NewHomePageState();
 }
- 
+
 class _NewHomePageState extends State<NewHomePage> {
   @override
   Widget build(BuildContext context) {
-   // final newuserprov = Provider.of<NewLoginProv>(context);
+    // final newuserprov = Provider.of<NewLoginProv>(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -41,8 +42,8 @@ class _NewHomePageState extends State<NewHomePage> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              // CarouselItem(),
- 
+              CarouselItem(),
+
               Container(
                 padding: EdgeInsets.only(bottom: 10.0),
                 decoration: BoxDecoration(
@@ -162,8 +163,11 @@ class _NewHomePageState extends State<NewHomePage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: GestureDetector(
-                            onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>ListMateriPage())),
-                                                      child: Container(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => ListMateriPage())),
+                            child: Container(
                               width: 145,
                               height: 100,
                               // margin: EdgeInsets.all(10),
@@ -243,7 +247,7 @@ class _NewHomePageState extends State<NewHomePage> {
                             ),
                           ),
                         ),
- 
+
                         // Column(
                         //   children: <Widget>[
                         //     Image.asset(
@@ -328,9 +332,6 @@ class _NewHomePageState extends State<NewHomePage> {
   }
 }
 
-
-
-
 // import 'package:adminkursus/src/provider/newloginprov.dart';
 // import 'package:adminkursus/src/ui/admin/adminhome.dart';
 // import 'package:adminkursus/src/ui/soal/carisoalpage.dart';
@@ -354,7 +355,7 @@ class _NewHomePageState extends State<NewHomePage> {
 //             SizedBox(height: 100,),
 //             Text(newuserprov.userNew.nama),
 //             Text(newuserprov.userNew.id),
-            
+
 //             Container(child: Card(child: Text('carousel'),),height: 100,width: double.infinity,),
 //             Container(child: Card(child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
 //               children: <Widget>[
