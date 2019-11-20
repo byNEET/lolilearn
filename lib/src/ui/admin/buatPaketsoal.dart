@@ -5,20 +5,8 @@ import 'package:adminkursus/src/service/realdb_api.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BuatPaketSoalPage extends StatefulWidget {
-  @override
-  _BuatPaketSoalPageState createState() => _BuatPaketSoalPageState();
-}
-
-class _BuatPaketSoalPageState extends State<BuatPaketSoalPage> {
+class BuatPaketSoalPage extends StatelessWidget {
   final RealdbApi api = RealdbApi();
-  bool isloading;
-  @override
-  void initState() {
-    // TODsO: implement initState
-    super.initState();
-    isloading=false;
-  }
   @override
   Widget build(BuildContext context) {
     //final search = Provider.of<SearchProv>(context);
@@ -97,12 +85,9 @@ class _BuatPaketSoalPageState extends State<BuatPaketSoalPage> {
             ),
            
              RaisedButton(
-               child: isloading?CircularProgressIndicator():Text('submit'),
-               onPressed: isloading?null:()async{
-                 setState(() {
-                  isloading =true; 
-                 });
-                 api.ngetesBuatSoalLangsungPushtapiFalse({
+               child: Text('submit'),
+               onPressed: ()async{
+                 api.buatPaketSoal({
                    "tingkat":bsoal.tingkat,
                    "kelas": bsoal.kelas,
                    "mapel": bsoal.mapel,

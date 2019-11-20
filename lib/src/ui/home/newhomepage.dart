@@ -1,18 +1,13 @@
-// import 'package:adminkursus/src/helper/Screen.dart';
+import 'package:adminkursus/src/helper/Screen.dart';
 import 'package:adminkursus/src/provider/newloginprov.dart';
-import 'package:adminkursus/src/service/screen.dart';
 import 'package:adminkursus/src/ui/admin/adminhome.dart';
-import 'package:adminkursus/src/ui/materi/listmateri_page.dart';
+import 'package:adminkursus/src/ui/infoguru/infoguruindex.dart';
 import 'package:adminkursus/src/ui/soal/carisoalpage.dart';
-
+import 'package:adminkursus/src/ui/tentang/tentang_view.dart';
 import 'package:adminkursus/src/widgets/carousel_movie_widget.dart';
-=======
-//import 'package:carousel_pro/carousel_pro.dart';
-
-// import 'package:adminkursus/src/ui/tentang/tentang_view.dart';
-// import 'package:adminkursus/src/widgets/carousel_movie_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 class NewHomePage extends StatefulWidget {
   @override
   _NewHomePageState createState() => _NewHomePageState();
@@ -21,7 +16,7 @@ class NewHomePage extends StatefulWidget {
 class _NewHomePageState extends State<NewHomePage> {
   @override
   Widget build(BuildContext context) {
-    // final newuserprov = Provider.of<NewLoginProv>(context);
+    final newuserprov = Provider.of<NewLoginProv>(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -47,7 +42,7 @@ class _NewHomePageState extends State<NewHomePage> {
           child: Column(
             children: <Widget>[
               CarouselItem(),
- 
+
               Container(
                 padding: EdgeInsets.only(bottom: 10.0),
                 decoration: BoxDecoration(
@@ -120,42 +115,51 @@ class _NewHomePageState extends State<NewHomePage> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            width: 145,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.redAccent,
-                              gradient: LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                stops: [
-                                  0.4,
-                                  0.9,
-                                ],
-                                colors: [
-                                  Colors.blue.withOpacity(0.5),
-                                  Colors.blueAccent,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        InfoGuruIndex()));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 145,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.redAccent,
+                                gradient: LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                  stops: [
+                                    0.4,
+                                    0.9,
+                                  ],
+                                  colors: [
+                                    Colors.blue.withOpacity(0.5),
+                                    Colors.blueAccent,
+                                  ],
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Image.asset(
+                                    'images/panduan.png',
+                                    height: 40,
+                                    width: 40,
+                                  ),
+                                  Text(
+                                    'Info Guru',
+                                    style: TextStyle(
+                                      fontFamily: "Poppins-Medium",
+                                    ),
+                                  ),
                                 ],
                               ),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Image.asset(
-                                  'images/panduan.png',
-                                  height: 40,
-                                  width: 40,
-                                ),
-                                Text(
-                                  'Info Guru',
-                                  style: TextStyle(
-                                    fontFamily: "Poppins-Medium",
-                                  ),
-                                ),
-                              ],
                             ),
                           ),
                         ),
@@ -166,47 +170,41 @@ class _NewHomePageState extends State<NewHomePage> {
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => ListMateriPage())),
-                            child: Container(
-                              width: 145,
-                              height: 100,
-                              // margin: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.blueGrey,
-                                gradient: LinearGradient(
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
-                                  stops: [
-                                    0.3,
-                                    0.9,
-                                  ],
-                                  colors: [
-                                    Colors.orange[200],
-                                    Colors.orangeAccent,
-                                  ],
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Image.asset(
-                                    'images/tips.png',
-                                    height: 40,
-                                    width: 40,
-                                  ),
-                                  Text(
-                                    'Materi',
-                                    style: TextStyle(
-                                      fontFamily: "Poppins-Medium",
-                                    ),
-                                  ),
+                          child: Container(
+                            width: 145,
+                            height: 100,
+                            // margin: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.blueGrey,
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                stops: [
+                                  0.3,
+                                  0.9,
+                                ],
+                                colors: [
+                                  Colors.orange[200],
+                                  Colors.orangeAccent,
                                 ],
                               ),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  'images/tips.png',
+                                  height: 40,
+                                  width: 40,
+                                ),
+                                Text(
+                                  'Materi',
+                                  style: TextStyle(
+                                    fontFamily: "Poppins-Medium",
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -335,89 +333,3 @@ class _NewHomePageState extends State<NewHomePage> {
     );
   }
 }
-
-
-// class CarouselItem extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: EdgeInsets.only(bottom: 20.0),
-//       width: Screen.width(context),
-//       height: 200.0,
-//       child: Carousel(
-//         images: [
-//           NetworkImage(
-//               'https://cdn-images-1.medium.com/max/2000/1*GqdzzfB_BHorv7V2NV7Jgg.jpeg'),
-//           NetworkImage(
-//               'https://cdn-images-1.medium.com/max/2000/1*wnIEgP1gNMrK5gZU7QS0-A.jpeg'),
-//         ],
-//         dotSize: 4.0,
-//         dotSpacing: 15.0,
-//         dotColor: Colors.lightGreenAccent,
-//         indicatorBgPadding: 5.0,
-//         dotBgColor: Colors.red.withOpacity(0.5),
-//         borderRadius: true,
-//       ),
-//     );
-//   }
-// }
-
-
-
-
-
-// import 'package:adminkursus/src/provider/newloginprov.dart';
-// import 'package:adminkursus/src/ui/admin/adminhome.dart';
-// import 'package:adminkursus/src/ui/soal/carisoalpage.dart';
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-
-// class NewHomePage extends StatefulWidget {
-//   @override
-//   _NewHomePageState createState() => _NewHomePageState();
-// }
-
-// class _NewHomePageState extends State<NewHomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     final newuserprov = Provider.of<NewLoginProv>(context);
-//     return SafeArea(
-//           child: Scaffold(
-//             appBar: AppBar(actions: <Widget>[RaisedButton(child: Text("admen"),onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>AdminHomePage())),)],),
-//         body: SingleChildScrollView(
-//           child: Column(children: <Widget>[
-//             SizedBox(height: 100,),
-//             Text(newuserprov.userNew.nama),
-//             Text(newuserprov.userNew.id),
-
-//             Container(child: Card(child: Text('carousel'),),height: 100,width: double.infinity,),
-//             Container(child: Card(child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-//               children: <Widget>[
-//                 InkWell(
-//                   onTap:()=> Navigator.push(context, MaterialPageRoute(builder: (_)=>CariSoalPage())),
-//                     child: Column(children: <Widget>[
-//                     Icon(Icons.add_circle),
-//                     Text('Cari soal')
-//                   ],),
-//                 ),
-//                 Column(children: <Widget>[
-//                   Icon(Icons.add_circle),
-//                   Text('panduan')
-//                 ],),
-//                 Column(children: <Widget>[
-//                   Icon(Icons.add_circle),
-//                   Text('tips')
-//                 ],),
-//                 Column(children: <Widget>[
-//                   Icon(Icons.add_circle),
-//                   Text('tentang')
-//                 ],),
-//               ],
-//             ),),),
-//             RaisedButton(child: Text('LogOut'),onPressed: ()=>Provider.of<NewLoginProv>(context).usernewLogout(),)
-//           ],),
-//         ),
-//       ),
-//     );
-//   }
-// }

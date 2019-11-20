@@ -31,8 +31,8 @@ class ResultNilaiPage extends StatelessWidget {
               Text("nilai: ${jawabanProv.countNilai()}"),
               Divider(),
               Text('pembahasan :'),
-              Container(child: Column(children: List<Widget>.generate(soalProv.soalnye.length-1, (index){
-                var soalnye = soalProv.soalnye[index+1];
+              Container(child: Column(children: List<Widget>.generate(soalProv.banksoal.soalnye.length-1, (index){
+                var soalnye = soalProv.banksoal.soalnye[index+1];
                 return Container(
                 child: ListTile(title: Text("${index+1}. "+soalnye.pertanyaan),
                 subtitle: Column( crossAxisAlignment: CrossAxisAlignment.start,

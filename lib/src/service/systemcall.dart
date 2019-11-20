@@ -2,9 +2,8 @@ import 'dart:convert';
 
 //import 'package:flutter/material.dart';
 
-class SystemCall{
-
-  // static void generateWillExitAppElement({BuildContext context,Widget titel,Widget konten,VoidCallback fyes}){ 
+class SystemCall {
+  // static void generateWillExitAppElement({BuildContext context,Widget titel,Widget konten,VoidCallback fyes}){
   //   showDialog<bool>(context: context,builder: (_)=>AlertDialog(
   //     title: titel,
   //     content: konten,
@@ -17,15 +16,15 @@ class SystemCall{
   //     ],
   //   )).then((onValue)=>onValue??false);
   // }
-  
-  static String encodetoBase64(String txt){
+
+  static String encodetoBase64(String txt) {
     List encodetext = utf8.encode(txt);
     String base64str = base64.encode(encodetext);
     print(base64str);
     return base64str;
   }
 
-  static String decodeFromBase64(String txt){
+  static String decodeFromBase64(String txt) {
     String decodetext = utf8.decode(base64.decode(txt));
     print(decodetext);
     return decodetext;

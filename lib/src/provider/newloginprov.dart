@@ -10,27 +10,7 @@ RealdbApi api =RealdbApi();
 
 TextEditingController tid = TextEditingController(text: "");
 TextEditingController tpass = TextEditingController(text: "");
-TextEditingController tnama = TextEditingController(text: "");
-String _kelas;
-String _tingkat;
-String get kelas=>_kelas;
-String get tingkat=>_tingkat;
-set kelas(String val){
-  _kelas=val;
-  notifyListeners();
-}
-set tingkat(String val){
-  _tingkat=val;
-  notifyListeners();
-}
-void clear(){
-  tid = TextEditingController(text: "");
-  tpass = TextEditingController(text: "");
-  tnama = TextEditingController(text: "");
-  _kelas = null;
-  _tingkat = null;
-  notifyListeners();
-}
+
 
   
   
@@ -86,13 +66,5 @@ void clear(){
     _userNew =null;
     notifyListeners();
     return null;
-  }
-
-  Future<UserNew> updateUserpref(String id,Map data)async{
-    var ooke = await api.editUser(id, data).then((_)=>api.getUserDetil(id));
-    SharedPreferences _preferences = await SharedPreferences.getInstance();
-    await _preferences.setString("akun", userNewToJson(ooke));
-    _userNew = ooke;
-    return userNew;
   }
 }
