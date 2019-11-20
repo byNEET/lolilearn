@@ -4,7 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:adminkursus/src/service/systemcall.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 //BanksoalModel banksoalModelFromJson(String str) => BanksoalModel.fromJson(json.decode(str));
@@ -22,7 +21,6 @@ class BanksoalModel {
     Map<String,Selesai> selesai;
     List<Soalnye> soalnye;
     String titel;
-    String idsoal;
 
     BanksoalModel({
       this.id,
@@ -34,14 +32,12 @@ class BanksoalModel {
         this.soalnye,
         this.titel, 
         this.tingkat,
-        this.createat,
-        this.idsoal
+        this.createat
     });
 
     factory BanksoalModel.fromJson(String id,Map<dynamic, dynamic> json) => BanksoalModel(
         id:id,
         jenis: json["jenis"],
-        idsoal: json["idsoal"],
         kelas: json["kelas"],
         mapel: json["mapel"],
         published: json["published"],
@@ -56,7 +52,6 @@ class BanksoalModel {
         "jenis": jenis,
         "kelas": kelas,
         "mapel": mapel,
-        "idsoal":idsoal,
         "published": published,
         "selesai": selesai,
         "soalnye": List<dynamic>.from(soalnye.map((x) => x == null ? null : x.toJson())),
@@ -121,20 +116,13 @@ class Soalnye {
         this.pertanyaan, 
     });
 
-    factory Soalnye.fromJson(Map<dynamic, dynamic> json) {
-      var mapjawaban={};
-      (json["jawaban"] as Map).forEach((k,v)=>mapjawaban[k] = SystemCall.decodeFromBase64(v));
-
-      return Soalnye(
+    factory Soalnye.fromJson(Map<dynamic, dynamic> json) => Soalnye(
        // jawaban: Jawaban.fromJson(json["jawaban"]),
-        //jawaban: (json["jawaban"] as Map).map((k,v){}),
-        //jawaban: json["jawaban"],
-        jawaban: mapjawaban,
+        jawaban: json["jawaban"],
         jawabanbenar: json["jawabanbenar"],
-        pembahasan: SystemCall.decodeFromBase64(json["pembahasan"]),
-        pertanyaan: SystemCall.decodeFromBase64(json["pertanyaan"]),
+        pembahasan: json["pembahasan"],
+        pertanyaan: json["pertanyaan"],
     );
-    }
 
     Map<String, dynamic> toJson() => {
         "jawaban": jawaban,
@@ -158,10 +146,10 @@ class Jawaban {
     });
 
     factory Jawaban.fromJson(Map<String, dynamic> json) => Jawaban(
-        a: SystemCall.decodeFromBase64(json["A"]),
-        b: SystemCall.decodeFromBase64(json["B"]),
-        c: SystemCall.decodeFromBase64(json["C"]),
-        d: SystemCall.decodeFromBase64(json["D"]),
+        a: json["A"],
+        b: json["B"],
+        c: json["C"],
+        d: json["D"],
     );
 
     Map<String, dynamic> toJson() => {

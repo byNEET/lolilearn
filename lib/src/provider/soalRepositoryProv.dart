@@ -1,5 +1,4 @@
 import 'package:adminkursus/src/model/banksoall_quicktype.dart';
-import 'package:adminkursus/src/model/listbanksoal_model.dart';
 import 'package:adminkursus/src/service/realdb_api.dart';
 import 'package:flutter/foundation.dart';
 
@@ -7,13 +6,13 @@ class SoalRepositoryProv with ChangeNotifier{
 
   RealdbApi api = RealdbApi();
 
-  Listbanksoal _banksoal;
+  BanksoalModel _banksoal;
   List<Soalnye> _soalnye;
 
-  Listbanksoal get banksoal=>_banksoal;
+  BanksoalModel get banksoal=>_banksoal;
   List<Soalnye> get soalnye =>_soalnye;
 
-  set banksoal(Listbanksoal val){
+  set banksoal(BanksoalModel val){
     _banksoal = val;
     notifyListeners();
   }
@@ -27,12 +26,9 @@ class SoalRepositoryProv with ChangeNotifier{
     notifyListeners();
   }
 
-  Future<List<Soalnye>> getsetBankSoalnye(String idsoal)async{
-    var res = await api.getSoalnye(idsoal);
-    _soalnye = res;
-    return soalnye;
+  Future<BanksoalModel> getsetBankSoalnye(String idsoal)async{
+    var res = await api.getBankSoalnya(idsoal);
+    _banksoal = res;
+    return banksoal;
   }
-  // Future<List<Soalnye>> getsetListSoalnye(String id)async{
-  //   var res = await api.get
-  // }
 }
